@@ -1,11 +1,12 @@
 .Card {
-    border: 1px solid black;
+    margin: 10px;
     width: 100px;
     height: 100px;
     cursor: move;
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
+    border: 1px solid black;
 }
 
 .Card:active {
