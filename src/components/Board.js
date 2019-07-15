@@ -4,20 +4,31 @@ import "../css/Board.css";
 import Row from "./Row";
 import axios from "axios";
 
-const serverUrl = "http://localhost:8081/courses/";
+const env = "" + process.env.NODE_ENV || "development";
+const serverUrl = ((env === "production")? "https://apollo-nu.herokuapp.com/" : "http://localhost:8081/") + "courses/";
 
 class Board extends Component {
     constructor(props) {
         super(props);
         this.onDragEnd = this.onDragEnd.bind(this);
-        this.state = {columns: {}};
+        this.state = {
+            columns: {
+                "fall": [],
+                "winter": [],
+                "spring": [],
+                "courses": []
+            }
+        };
     }
 
     componentDidMount() {
         axios.get(serverUrl)
           .then(res => {
             res = res.data;
-            if (!res.ok) { return; }
+            if (!res.ok) {
+                console.log(res.message);
+                return;
+            }
     
             const columns = this.state.columns;
             columns["courses"] = res.body.courses.map(course => {
@@ -25,7 +36,7 @@ class Board extends Component {
                 id: course._id,
                 content: course.title
               }
-            })
+            });
             this.setState(columns);
           })
       }

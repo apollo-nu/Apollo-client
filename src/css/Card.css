@@ -1,6 +1,5 @@
 .Card {
     margin: 10px;
-    width: 100px;
     height: 100px;
     cursor: move;
     cursor: grab;

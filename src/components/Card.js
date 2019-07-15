@@ -9,9 +9,9 @@ class Card extends Component {
                     index={this.props.index}>
                 {provided => (
                     <div className="Card"
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}>
+                         ref={provided.innerRef}
+                         {...provided.draggableProps}
+                         {...provided.dragHandleProps}>
                         {this.props.items}
                     </div>
                 )}
