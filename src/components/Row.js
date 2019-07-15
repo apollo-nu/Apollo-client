@@ -12,9 +12,9 @@ class Row extends Component {
                          ref={provided.innerRef}
                          {...provided.droppableProps}
                          {...provided.droppablePlaceholder}>
-                        {this.props.items.map(block => <Card draggableId={block.id} 
-                                                             index={this.props.column.numberIds.indexOf(block.id)}
-                                                             key={parseInt(block.content, 10)} //need to change this later
+                        {this.props.items.map(block => <Card draggableId={block.id}
+                                                             index={this.props.column.numbers.map(obj => obj.id).indexOf(block.id)}
+                                                             key={parseInt(block.content, 10)} //likely need to change this later
                                                              items={block.content}>
                                                        </Card>)}
                         {provided.placeholder}
