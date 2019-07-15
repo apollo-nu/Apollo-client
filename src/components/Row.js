@@ -6,21 +6,23 @@ import Card from "./Card";
 class Row extends Component {
     render() {
         return (
-            <Droppable droppableId={this.props.column.id} className="Row">
-                {provided => (
-                    <div className={this.props.className}
-                         ref={provided.innerRef}
-                         {...provided.droppableProps}
-                         {...provided.droppablePlaceholder}>
-                        {this.props.items.map(block => <Card draggableId={block.id}
-                                                             index={this.props.column.numbers.map(obj => obj.id).indexOf(block.id)}
-                                                             key={parseInt(block.content, 10)} //likely need to change this later
-                                                             items={block.content}>
-                                                       </Card>)}
-                        {provided.placeholder}
-                    </div>
-                )}
-            </Droppable>
+            <div className="Row">
+                <Droppable droppableId={this.props.column.id}>
+                    {provided => (
+                        <div className={this.props.className}
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                            {...provided.droppablePlaceholder}>
+                            {this.props.items.map(block => <Card draggableId={block.id}
+                                                                index={this.props.column.numbers.map(obj => obj.id).indexOf(block.id)}
+                                                                key={parseInt(block.content, 10)} //likely need to change this later
+                                                                items={block.content}>
+                                                        </Card>)}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </div>
         )
     }
 }
