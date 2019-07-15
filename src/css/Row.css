@@ -1,7 +1,6 @@
 .Row {
     display: flex;
     flex-direction: column;
-    align-items: center;
     overflow-y: auto;
     height: 700px;
     width: 250px;

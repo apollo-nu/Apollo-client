@@ -12,6 +12,7 @@ class Board extends Component {
         super(props);
         this.onDragEnd = this.onDragEnd.bind(this);
         this.state = {
+            courses: [],
             columns: {
                 "fall": [],
                 "winter": [],
@@ -29,6 +30,8 @@ class Board extends Component {
                 console.log(res.message);
                 return;
             }
+            const courses = res.body.courses;
+            this.setState(courses);
     
             const columns = this.state.columns;
             columns["courses"] = res.body.courses.map(course => {
