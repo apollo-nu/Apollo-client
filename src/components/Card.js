@@ -6,12 +6,12 @@ class Card extends Component {
     render() {
         return (
             <Draggable draggableId={this.props.draggableId}
-                       index={this.props.index}>
+                    index={this.props.index}>
                 {provided => (
-                    <div className={this.props.className}
-                         ref={provided.innerRef}
-                             {...provided.draggableProps}
-                             {...provided.dragHandleProps}>
+                    <div className="Card"
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}>
                         {this.props.items}
                     </div>
                 )}

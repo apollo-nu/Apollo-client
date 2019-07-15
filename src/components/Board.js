@@ -33,16 +33,18 @@ class Board extends Component {
     render() {
         const columns = this.state.columns;
         return (
-            <DragDropContext onDragEnd={this.onDragEnd}>
-                <Grid width={GRID_WIDTH}
-                      gap={GRID_SPACING}
-                      align={"center"}>
-                      {Object.keys(columns).map((key, i) => <Row key={i}
-                                                                 column={{id: key, numbers: columns[key]}}
-                                                                 items={columns[key]}>
-                                                            </Row>)}
-                </Grid>
-            </DragDropContext>
+            <div className="Board">
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                    <Grid width={GRID_WIDTH}
+                        gap={GRID_SPACING}
+                        align={"center"}>
+                        {Object.keys(columns).map((key, i) => <Row key={i}
+                                                                   column={{id: key, numbers: columns[key]}}
+                                                                   items={columns[key]}>
+                                                              </Row>)}
+                    </Grid>
+                </DragDropContext>
+            </div>
         )
     }
 }

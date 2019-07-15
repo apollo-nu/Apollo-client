@@ -9,15 +9,14 @@ class Row extends Component {
             <div className="Row">
                 <Droppable droppableId={this.props.column.id}>
                     {provided => (
-                        <div className={this.props.className}
-                            ref={provided.innerRef}
+                        <div ref={provided.innerRef}
                             {...provided.droppableProps}
                             {...provided.droppablePlaceholder}>
-                            {this.props.items.map(block => <Card draggableId={block.id}
-                                                                index={this.props.column.numbers.map(obj => obj.id).indexOf(block.id)}
-                                                                key={parseInt(block.content, 10)} //likely need to change this later
-                                                                items={block.content}>
-                                                        </Card>)}
+                            {this.props.items.map(block => <Card key={block.id}
+                                                                 draggableId={block.id}
+                                                                 index={this.props.column.numbers.map(obj => obj.id).indexOf(block.id)}
+                                                                 items={block.content}>
+                                                           </Card>)}
                             {provided.placeholder}
                         </div>
                     )}
