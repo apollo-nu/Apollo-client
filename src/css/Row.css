@@ -1,0 +1,9 @@
+.Row {
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    height: 500px;
+    width: 150px;
+    margin: 10px;
+    border: 1px solid black;
+}
