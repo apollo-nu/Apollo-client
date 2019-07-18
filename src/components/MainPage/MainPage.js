@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Board from "./Board";
-import "../css/MainPage.css";
+import "../../css/MainPage.css";
 
 class MainPage extends Component {
   render() {

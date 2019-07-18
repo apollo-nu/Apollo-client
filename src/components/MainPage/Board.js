@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import "../css/Board.css";
+import "../../css/Board.css";
 import Row from "./Row";
 import axios from "axios";
-import API from "../config/api";
+import API from "../../config/api";
 
 const coursesUrl = API.courses;
 const MAX_ELEMENTS = 20;

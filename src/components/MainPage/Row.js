@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import PropTypes from "prop-types";
-import "../css/Row.css";
+import "../../css/Row.css";
 import Card from "./Card";
 
 class Row extends Component {
