@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import Board from "./components/Board";
-import "./css/App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import MainPage from "./components/MainPage";
+import LoginPage from "./components/LoginPage";
 
 class App extends Component {
   render() {
     return (
-      <Board>
-      </Board>
+      <Router>
+          <Route path="/" exact component={MainPage}/>
+          <Route path="/login/" component={LoginPage}/>
+      </Router>
     );
   }
 }
