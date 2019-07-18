@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import {DragDropContext} from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
 import "../css/Board.css";
 import Row from "./Row";
 import axios from "axios";
+import API from "../config/api";
 
-const env = "" + process.env.NODE_ENV || "development";
-const serverUrl = ((env === "production")? "https://apollo-nu.herokuapp.com/" : "http://localhost:8081/") + "courses/";
+const coursesUrl = API.courses;
+const MAX_ELEMENTS = 20;
 
 class Board extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class Board extends Component {
     }
 
     componentDidMount() {
-        axios.get(serverUrl)
+        axios.get(coursesUrl)
           .then(res => {
             res = res.data;
             if (!res.ok) {
@@ -32,21 +33,21 @@ class Board extends Component {
             }
             const courses = res.body.courses;
             this.setState(courses);
-    
+
             const columns = this.state.columns;
-            columns["courses"] = res.body.courses.map(course => {
+            columns.courses = res.body.courses.slice(0, MAX_ELEMENTS).map(course => {
               return {
                 id: course._id,
                 content: course.title
-              }
+              };
             });
             this.setState(columns);
-          })
+          });
       }
 
     onDragEnd(result) {
         const { destination, source } = result;
-        if (!(destination && source)) { return }
+        if (!(destination && source)) { return; }
     
         const columns = this.state.columns;
         let sourceColumn = columns[source.droppableId];
@@ -71,8 +72,10 @@ class Board extends Component {
                                                           </Row>)}
                 </DragDropContext>
             </div>
-        )
+        );
     }
 }
+
+Board.propTypes = {};
 
 export default Board;
