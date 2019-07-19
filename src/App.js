@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import MainPage from "./components/MainPage/MainPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 
-class App extends Component {
+class App extends Component {  
   render() {
     return (
       <Router>
-          <Route path="/" exact component={MainPage}/>
-          <Route path="/login/" component={LoginPage}/>
+          <Route exact path="/" render={props => <MainPage {...props}/>}/>
+          <Route exact path="/login/" render={props => <LoginPage {...props}/>}/>
       </Router>
     );
   }
