@@ -6,7 +6,7 @@ import "../../css/MainPage.css";
 class MainPage extends Component {
   constructor(props) {
     super(props);
-    this.props.history.push("/login/");
+    this.props.history.push("/createAccount/");
   }
 
   render() {
