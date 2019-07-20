@@ -5,7 +5,7 @@ import Row from "./Row";
 import axios from "axios";
 import API from "../../config/api";
 
-const coursesUrl = API.courses;
+const coursesUrl = `${API.courses}/`;
 const MAX_ELEMENTS = 20;
 
 class Board extends Component {
