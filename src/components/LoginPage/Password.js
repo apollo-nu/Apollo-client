@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import "../../css/Password.css";
 
 // Password text form, may not need this as a separate component
@@ -12,5 +13,11 @@ class Password extends Component {
         )
     }
 }
+
+Password.propTypes = {
+    name: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.string
+};
 
 export default Password;

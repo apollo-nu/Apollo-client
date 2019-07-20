@@ -22,15 +22,15 @@ class Form extends Component {
         axios.post(createAccountAPI, this.state)
             .then(response => {
                 response = response.data;
-                if (!response.ok) {
-                    console.log(response.message);
-                } else {
+                if (response.ok) {
                     console.log(response.body);
+                } else {
+                    console.log(response.message);
                 }
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
     }
 
     render() {
@@ -39,7 +39,7 @@ class Form extends Component {
                 <label>
                     Email:
                     <Email name="email"
-                           onChange={(e) => {
+                           onChange={e => {
                                this.setState({email: e.target.value});
                            }}
                            value={this.state.email}/>
@@ -48,7 +48,7 @@ class Form extends Component {
                 <label>
                     Password:
                     <Password name="password"
-                              onChange={(e) => {
+                              onChange={e => {
                                   this.setState({password: e.target.value});
                               }}
                               value={this.state.password}/>
