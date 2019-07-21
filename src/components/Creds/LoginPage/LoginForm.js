@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import Email from "../Email";
 import Password from "../Password";
 import ErrorText from "../ErrorText";
@@ -44,10 +43,6 @@ class LoginForm extends Component {
             });
     }
 
-    moveToCreate() {
-        console.log(this.props.history);
-    }
-
     render() {
         return (
             <div>
@@ -78,18 +73,9 @@ class LoginForm extends Component {
                 {this.state.errorVisible? <ErrorText value={this.state.errorText}/> : null}
                 <Submit value="Submit"
                         onClick={this.login.bind(this)}/>
-                <input type="button"
-                       value="Create Account"
-                       onClick={this.moveToCreate.bind(this)}/>
             </div>
         )
     }
 }
-
-LoginForm.propTypes = {
-    history: PropTypes.shape({
-        push: PropTypes.func.isRequired
-    })
-};
 
 export default LoginForm;

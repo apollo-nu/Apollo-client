@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import CreateWrapper from "./CreateWrapper";
 import "../../../css/CreateAccountPage.css";
 
@@ -6,9 +7,15 @@ import "../../../css/CreateAccountPage.css";
 class CreateAccountPage extends Component {
   render() {
     return (
-        <CreateWrapper/>
+      <CreateWrapper history={this.props.history}/>
     );
   }
 }
+
+CreateAccountPage.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  })
+};
 
 export default CreateAccountPage;
