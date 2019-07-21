@@ -7,12 +7,7 @@ axios.defaults.withCredentials = true;
 const pingAPI = `${API.users}/`;
 
 class Controller extends Component {
-    constructor(props) {
-        super(props);
-        this.ping();
-    }
-
-    ping() {
+    componentWillMount() {
         axios.get(pingAPI)
             .then(response => {
                 response = response.data;
@@ -20,11 +15,13 @@ class Controller extends Component {
                     sessionStorage.setItem("id", response.body.id);
                     this.props.history.push("/main/");
                 } else {
+                    sessionStorage.removeItem("id");
                     this.props.history.push("/login/");
                 }
             })
             .catch(err => {
                 console.log(err);
+                sessionStorage.removeItem("id");
                 this.props.history.push("/login/");
             })
     }
