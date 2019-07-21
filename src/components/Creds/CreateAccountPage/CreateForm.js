@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
 import Email from "../Email";
 import Password from "../Password";
 import ErrorText from "../ErrorText";

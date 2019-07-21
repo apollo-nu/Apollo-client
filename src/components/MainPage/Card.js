@@ -13,7 +13,7 @@ class Card extends Component {
                          ref={provided.innerRef}
                          {...provided.draggableProps}
                          {...provided.dragHandleProps}>
-                        {this.props.items}
+                        {this.props.title}
                     </div>
                 )}
             </Draggable>
@@ -24,7 +24,7 @@ class Card extends Component {
 Card.propTypes = {
     draggableId: PropTypes.string,
     index: PropTypes.number,
-    items: PropTypes.array
+    title: PropTypes.string
 };
 
 export default Card;

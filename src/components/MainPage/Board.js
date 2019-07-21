@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import "../../css/Board.css";
 import Row from "./Row";
+
 import axios from "axios";
 import API from "../../config/api";
+axios.defaults.withCredentials = true;
 
 const coursesUrl = `${API.courses}/`;
 const MAX_ELEMENTS = 20;
@@ -11,6 +13,7 @@ const MAX_ELEMENTS = 20;
 class Board extends Component {
     constructor(props) {
         super(props);
+        // Redirect to login if no cookie
         this.onDragEnd = this.onDragEnd.bind(this);
         this.state = {
             courses: [],

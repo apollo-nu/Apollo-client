@@ -16,7 +16,7 @@ class Row extends Component {
                         {this.props.items.map(block => <Card key={block.id}
                                                              draggableId={block.id}
                                                              index={this.props.column.numbers.map(obj => obj.id).indexOf(block.id)}
-                                                             items={block.content}>
+                                                             title={block.content}>
                                                        </Card>)}
                         {provided.placeholder}
                     </div>

@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
 import Email from "../Email";
 import Password from "../Password";
 import ErrorText from "../ErrorText";
@@ -30,20 +32,22 @@ class LoginForm extends Component {
     }
 
     login() {
+        axios.defaults.withCredentials = true;
         axios.post(loginAPI, {
             email: this.state.email,
             password: this.state.password
         })
             .then(response => {
+                console.log(response);
                 response = response.data;
                 if (response.ok) {
-                    console.log(response.body);
+                    this.props.history.push("/main/");
                 } else {
                     this.showError(response.message);
                 }
             })
             .catch(err => {
-                this.showError(err);
+                console.log(err);
             });
     }
 
@@ -81,5 +85,11 @@ class LoginForm extends Component {
         )
     }
 }
+
+LoginForm.propTypes = {
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    })
+};
 
 export default LoginForm;
