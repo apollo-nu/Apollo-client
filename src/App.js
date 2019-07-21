@@ -1,32 +1,21 @@
 import React, { Component } from "react";
-import Board from "./components/Board";
-import "./css/App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-const initialData = {
-  columns: {
-    'column-1': [
-      { id: 'five', content: '5' },
-      { id: 'four', content: '4' },
-      { id: 'one', content: '1' },
-      { id: 'three', content: '3' },
-      { id: 'two', content: '2' }
-    ],
-    'column-2': [
-      { id: 'six', content: '6' },
-      { id: 'seven', content: '7' },
-      { id: 'eight', content: '8' },
-      { id: 'nine', content: '9' },
-      { id: 'ten', content: '10' }
-    ]
-  }
-};
+import Controller from "./Controller";
+import MainPage from "./components/MainPage/MainPage";
+import LoginPage from "./components/Creds/LoginPage/LoginPage";
+import CreateAccountPage from "./components/Creds/CreateAccountPage/CreateAccountPage";
 
-class App extends Component {
+class App extends Component {  
   render() {
     return (
-      <Board columns={{columns: initialData.columns}}>
-      </Board>
-    )
+      <Router>
+          <Route exact path="/" render={props => <Controller {...props}/>}/>
+          <Route exact path="/main/" render={props => <MainPage {...props}/>}/>
+          <Route exact path="/login/" render={props => <LoginPage {...props}/>}/>
+          <Route exact path="/createAccount/" render={props => <CreateAccountPage {...props}/>}/>
+      </Router>
+    );
   }
 }
 

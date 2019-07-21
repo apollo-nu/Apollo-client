@@ -1,7 +1,6 @@
 .Card {
     margin: 10px;
-    width: 100px;
-    height: 100px;
+    padding: 5px;
     cursor: move;
     cursor: grab;
     cursor: -moz-grab;

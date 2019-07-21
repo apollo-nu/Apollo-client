@@ -1,0 +1,15 @@
+README.md
+CHANGELOG.md
+LICENSE
+
+package.json
+package-lock.json
+
+.eslintignore
+.eslintrc.json
+
+/public/*
+/node_modules/*
+
+/src/css/*
+.gitignore
