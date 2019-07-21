@@ -13,7 +13,7 @@ class CreateWrapper extends Component {
     return (
         <div>
           Create Account:
-          <CreateForm/>
+          <CreateForm history={this.props.history}/>
           <input type="button"
                  value="Already have an account? Login"
                  onClick={this.moveToLogin.bind(this)}/>

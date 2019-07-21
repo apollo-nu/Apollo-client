@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Email from "../Email";
 import Password from "../Password";
 import ErrorText from "../ErrorText";
@@ -32,7 +33,7 @@ class CreateForm extends Component {
                 .then(response => {
                     response = response.data;
                     if (response.ok) {
-                        console.log(response.body);
+                        this.props.history.push("/login/");
                     } else {
                         this.setState({
                             errorText: response.message,
@@ -97,5 +98,11 @@ class CreateForm extends Component {
         )
     }
 }
+
+CreateForm.propTypes = {
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    })
+};
 
 export default CreateForm;
