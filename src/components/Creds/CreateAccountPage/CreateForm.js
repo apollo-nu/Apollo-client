@@ -24,6 +24,13 @@ class CreateForm extends Component {
         this.state = initialState;
     }
 
+    showError(message) {
+        this.setState({
+            errorText: message,
+            errorVisible: true
+        });
+    }
+
     createAccount() {
         if (this.state.password === this.state.confirmPassword) {
             axios.post(createAccountAPI, {
@@ -35,20 +42,14 @@ class CreateForm extends Component {
                     if (response.ok) {
                         this.props.history.push("/login/");
                     } else {
-                        this.setState({
-                            errorText: response.message,
-                            errorVisible: true
-                        });
+                        this.showError(response.message);
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+                    this.showError(err);
                 });
         } else {
-            this.setState({
-                errorText: "Passwords must be equal",
-                errorVisible: true
-            });
+            this.showError("Passwords must be equal");
         } 
     }
 

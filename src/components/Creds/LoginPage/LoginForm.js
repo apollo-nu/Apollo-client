@@ -22,6 +22,13 @@ class LoginForm extends Component {
         this.state = initialState;
     }
 
+    showError(message) {
+        this.setState({
+            errorText: message,
+            errorVisible: true
+        });
+    }
+
     login() {
         axios.post(loginAPI, {
             email: this.state.email,
@@ -32,14 +39,11 @@ class LoginForm extends Component {
                 if (response.ok) {
                     console.log(response.body);
                 } else {
-                    this.setState({
-                        errorText: response.message,
-                        errorVisible: true
-                    });
+                    this.showError(response.message);
                 }
             })
             .catch(err => {
-                console.log(err);
+                this.showError(err);
             });
     }
 
