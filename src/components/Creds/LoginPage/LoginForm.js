@@ -8,6 +8,7 @@ import Submit from "../Submit";
 
 import axios from "axios";
 import API from "../../../config/api";
+axios.defaults.withCredentials = true;
 const loginAPI = `${API.users}/login`;
 
 const initialState = {
@@ -32,13 +33,11 @@ class LoginForm extends Component {
     }
 
     login() {
-        axios.defaults.withCredentials = true;
         axios.post(loginAPI, {
             email: this.state.email,
             password: this.state.password
         })
             .then(response => {
-                console.log(response);
                 response = response.data;
                 if (response.ok) {
                     this.props.history.push("/main/");
