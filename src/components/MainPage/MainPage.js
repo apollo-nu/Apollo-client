@@ -5,8 +5,7 @@ import "../../css/MainPage.css";
 class MainPage extends Component {
   render() {
     return (
-      <Board>
-      </Board>
+      <Board/>
     );
   }
 }

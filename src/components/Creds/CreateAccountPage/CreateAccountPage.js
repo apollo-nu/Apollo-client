@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import CredsWrapper from "./CredsWrapper";
+import CreateWrapper from "./CreateWrapper";
 import "../../../css/CreateAccountPage.css";
 
-// Wrapper for the entire Login Page
+// Wrapper for the entire Create Account Page
 class CreateAccountPage extends Component {
   render() {
     return (
-        <CredsWrapper/>
+        <CreateWrapper/>
     );
   }
 }

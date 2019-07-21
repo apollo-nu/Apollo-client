@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import CreateForm from "./CreateForm";
-import "../../../css/CredsWrapper.css";
+import "../../../css/CreateWrapper.css";
 
 // UI wrapper for the input form
-class CredsWrapper extends Component {
+class CreateWrapper extends Component {
   render() {
     return (
         <div>
@@ -14,4 +14,4 @@ class CredsWrapper extends Component {
   }
 }
 
-export default CredsWrapper;
+export default CreateWrapper;

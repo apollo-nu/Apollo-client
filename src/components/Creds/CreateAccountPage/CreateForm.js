@@ -3,7 +3,6 @@ import Email from "../Email";
 import Password from "../Password";
 import ErrorText from "../ErrorText";
 import Submit from "../Submit";
-import "../../../css/Form.css";
 
 import axios from "axios";
 import API from "../../../config/api";
@@ -26,13 +25,19 @@ class CreateForm extends Component {
 
     createAccount() {
         if (this.state.password === this.state.confirmPassword) {
-            axios.post(createAccountAPI, this.state)
+            axios.post(createAccountAPI, {
+                email: this.state.email,
+                password: this.state.password
+            })
                 .then(response => {
                     response = response.data;
                     if (response.ok) {
                         console.log(response.body);
                     } else {
-                        console.log(response.message);
+                        this.setState({
+                            errorText: response.message,
+                            errorVisible: true
+                        });
                     }
                 })
                 .catch(err => {
