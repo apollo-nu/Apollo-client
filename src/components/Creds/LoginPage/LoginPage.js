@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import LoginWrapper from "./LoginWrapper";
-import "../../../css/LoginPage.css";
 
 // Wrapper for the entire Login Page
 class LoginPage extends Component {

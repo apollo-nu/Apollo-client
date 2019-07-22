@@ -47,7 +47,8 @@ class CreateForm extends Component {
                     }
                 })
                 .catch(err => {
-                    this.showError(err);
+                    console.log(err);
+                    this.showError("Error 404");
                 });
         } else {
             this.showError("Passwords must be equal");

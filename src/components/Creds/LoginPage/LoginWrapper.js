@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import LoginForm from "./LoginForm";
-import "../../../css/LoginWrapper.css";
 
 // UI wrapper for the input form
 class LoginWrapper extends Component {

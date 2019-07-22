@@ -1,8 +1,0 @@
-.Board {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 750px;
-    border: 1px solid black;
-}

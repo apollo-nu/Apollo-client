@@ -1,24 +1,22 @@
 import React, { Component } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import PropTypes from "prop-types";
-import "../../css/Row.css";
 import Card from "./Card";
 
 class Row extends Component {
     render() {
         return (
-            <Droppable droppableId={this.props.column.id}>
+            <Droppable droppableId={this.props.id}>
                 {provided => (
                     <div className="Row"
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                        {...provided.droppablePlaceholder}>
-                        {this.props.items.map(block => <Card key={block.id}
-                                                             draggableId={block.id}
-                                                             index={this.props.column.numbers.map(obj => obj.id).indexOf(block.id)}
-                                                             title={block.content}>
-                                                       </Card>)}
-                        {provided.placeholder}
+                         ref={provided.innerRef}
+                         {...provided.droppableProps}
+                         {...provided.droppablePlaceholder}>
+                         {this.props.items.map(block => <Card key={block.id}
+                                                              draggableId={block.id}
+                                                              index={this.props.items.map(obj => obj.id).indexOf(block.id)}
+                                                              title={block.content}/>)}
+                         {provided.placeholder}
                     </div>
                 )}
             </Droppable>
@@ -27,7 +25,7 @@ class Row extends Component {
 }
 
 Row.propTypes = {
-    column: PropTypes.object,
+    id: PropTypes.string,
     items: PropTypes.array
 };
 

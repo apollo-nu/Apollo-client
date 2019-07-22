@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import PropTypes from "prop-types";
-import "../../css/Card.css";
 
 class Card extends Component {
     render() {

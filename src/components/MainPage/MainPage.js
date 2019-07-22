@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Board from "./Board";
-import "../../css/MainPage.css";
+import PageHeader from "./PageHeader";
+import PageBody from "./PageBody";
 
 import axios from "axios";
 import API from "../../config/api";
@@ -29,7 +29,10 @@ class MainPage extends Component {
 
   render() {
     return (
-      <Board/>
+      <div>
+        <PageHeader/>
+        <PageBody/>
+      </div>
     );
   }
 }

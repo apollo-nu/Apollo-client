@@ -7,9 +7,8 @@ package-lock.json
 
 .eslintignore
 .eslintrc.json
+.gitignore
 
 /public/*
 /node_modules/*
-
-/src/css/*
-.gitignore
+/src/index.css
