@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Board from "./Board";
+import PageHeader from "./PageHeader";
+import PageBody from "./PageBody";
 
 import axios from "axios";
 import API from "../../config/api";
@@ -11,9 +12,8 @@ const pingAPI = `${API.users}/`;
  * MainPage should render PageBody and PageHeader
  * PageBody should render a DroppableContext wrapping a Board and a Sidebar
  * 
- * Board should render a grid layout of RowWrappers
- * RowWrappers should render a RowHeader (text, maybe not a component) and a Row
- * Row should render a Droppable that wraps Cards
+ * Board should render a grid layout of Rows
+ * Row should render a header and aDroppable that wraps Cards
  * Cards should render a Draggable
  * 
  * Sidebar should render a SearchBar and a SearchBody
@@ -44,7 +44,10 @@ class MainPage extends Component {
 
   render() {
     return (
-      <Board/>
+      <div>
+        <PageHeader/>
+        <PageBody/>
+      </div>
     );
   }
 }
