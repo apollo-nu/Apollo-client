@@ -4,6 +4,8 @@ class SearchBar extends Component {
     render() {
         return (
             <div>
+                Search:
+                <input type="search"/>
             </div>
         )
     }

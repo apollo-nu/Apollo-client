@@ -6,7 +6,7 @@ import SearchBody from "./SearchBody";
 class Sidebar extends Component {
     render() {
         return (
-            <div>
+            <div className="Sidebar">
                 <SearchBar/>
                 <SearchBody column={this.props.column}/>
             </div>
