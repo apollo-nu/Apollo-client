@@ -8,6 +8,22 @@ import API from "../../config/api";
 axios.defaults.withCredentials = true;
 const pingAPI = `${API.users}/`;
 
+/*
+ * MainPage should render PageBody and PageHeader
+ * PageBody should render a DroppableContext wrapping a Board and a Sidebar
+ * 
+ * Board should render a grid layout of RowWrappers
+ * RowWrappers should render a RowHeader (text, maybe not a component) and a Row
+ * Row should render a Droppable that wraps Cards
+ * Cards should render a Draggable
+ * 
+ * Sidebar should render a SearchBar and a SearchBody
+ * SearchBar should render a search input
+ * SearchBody should render a Row, which wraps Cards
+ * 
+ * PageHeader should wrap top logo, Board navigation, etc. (anything outside the DroppableContext)
+ */
+
 class MainPage extends Component {
   componentWillMount() {
     axios.get(pingAPI)
