@@ -25,7 +25,7 @@ class Row extends Component {
 }
 
 Row.propTypes = {
-    id: PropTypes.number,
+    id: PropTypes.string,
     items: PropTypes.array
 };
 

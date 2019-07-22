@@ -39,19 +39,16 @@ class PageBody extends Component {
                     console.log(res.message);
                     return;
                 }
-                const courses = res.body.courses;
-                this.setState(courses);
+                this.setState({courses: res.body.courses});
                 this.setSearchBody();
           });
     }
 
     setSearchBody() {
-        this.setState({searchBody: this.state.courses.slice(0, MAX_ELEMENTS).map(course => {
-            return {
-                id: course._id,
-                content: course.title
-            };
-        })});
+        this.setState({searchBody: this.state.courses.slice(0, MAX_ELEMENTS).map(course => ({
+            id: course._id,
+            content: course.title
+        }))});
     }
 
     onDragEnd(result) {
@@ -70,9 +67,9 @@ class PageBody extends Component {
         columns[source.droppableId] = sourceColumn;
         columns[destination.droppableId] = destColumn;
 
-        const searchBody = columns.searchBody;
+        this.setState({searchBody: columns.searchBody});
         Reflect.deleteProperty(columns, 'searchBody');
-        this.setState(columns, searchBody);
+        this.setState(columns);
     }
 
     render() {

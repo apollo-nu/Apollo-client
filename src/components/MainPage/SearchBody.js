@@ -6,7 +6,7 @@ class SearchBody extends Component {
     render() {
         const column = this.props.column;
         return (
-            <Row id={-1}
+            <Row id={"searchBody"}
                  items={column}/>
         )
     }

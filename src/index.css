@@ -1,4 +1,9 @@
 /* MainPage */
+.PageBody {
+    display: flex;
+    flex-direction: row;
+}
+
 .Board {
     display: flex;
     flex-direction: row;

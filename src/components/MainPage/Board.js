@@ -8,7 +8,7 @@ class Board extends Component {
         return (
             <div className="Board">
                 {Object.keys(columns).map((key, i) => <Row key={i}
-                                                           id={i}
+                                                           id={key}
                                                            items={columns[key]}/>)}
             </div>
         );
@@ -16,7 +16,7 @@ class Board extends Component {
 }
 
 Board.propTypes = {
-    columns: PropTypes.Object
+    columns: PropTypes.object
 };
 
 export default Board;
