@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import "../../css/Board.css";
 import Row from "./Row";
 
 import axios from "axios";

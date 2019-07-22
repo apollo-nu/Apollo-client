@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import CreateWrapper from "./CreateWrapper";
-import "../../../css/CreateAccountPage.css";
 
 // Wrapper for the entire Create Account Page
 class CreateAccountPage extends Component {

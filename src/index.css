@@ -1,3 +1,23 @@
+/* MainPage */
+.Board {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 750px;
+    border: 1px solid black;
+}
+
+.Row {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 700px;
+    width: 250px;
+    margin: 10px;
+    border: 1px solid black;
+}
+
 .Card {
     margin: 10px;
     padding: 5px;
@@ -18,4 +38,9 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+
+/* Creds */
+.ErrorText {
+    color: red;
 }
