@@ -16,7 +16,7 @@ const initialData = {
         "fall": [],
         "winter": [],
         "spring": []
-    }, 
+    },
     searchBody: []
 };
 
