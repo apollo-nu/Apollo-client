@@ -6,9 +6,7 @@ import Sidebar from "./Sidebar";
 import axios from "axios";
 import API from "../../config/api";
 axios.defaults.withCredentials = true;
-
 const coursesUrl = `${API.courses}/`;
-const MAX_ELEMENTS = 20;
 
 const initialData = {
     courses: [],
@@ -45,7 +43,7 @@ class PageBody extends Component {
     }
 
     setSearchBody() {
-        this.setState({searchBody: this.state.courses.slice(0, MAX_ELEMENTS).map(course => ({
+        this.setState({searchBody: this.state.courses.map(course => ({
             id: course._id,
             content: course.title
         }))});
