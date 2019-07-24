@@ -18,13 +18,12 @@ class Sidebar extends Component {
     }
 
     render() {
-        console.log(this.props.column);
         const search = this.state.searchValue.toLowerCase();
         return (
             <div className="Sidebar">
                 <SearchBar onChange={e => this.onChange(e)}
                            value={this.state.searchValue}/>
-                <SearchBody column={this.props.column.filter(block => search? block.content.toLowerCase().includes(search) : false)}/>
+                <SearchBody column={this.props.column.filter(block => (search? block.content.toLowerCase().includes(search) : false))}/>
             </div>
         )
     }
