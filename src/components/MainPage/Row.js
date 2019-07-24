@@ -6,6 +6,10 @@ import Card from "./Card";
 const MAX_CARDS = 100;
 
 class Row extends Component {
+    displayString(course) {
+        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
+    }
+
     render() {
         return (
             <Droppable droppableId={this.props.id}>
@@ -15,9 +19,9 @@ class Row extends Component {
                          {...provided.droppableProps}
                          {...provided.droppablePlaceholder}>
                          {this.props.items.slice(0, MAX_CARDS).map(block => <Card key={block.id}
-                                                                                  draggableId={block.id}
+                                                                                  draggableId={block.id.toString()}
                                                                                   index={this.props.items.map(obj => obj.id).indexOf(block.id)}
-                                                                                  title={block.title}/>)}
+                                                                                  title={this.displayString(block)}/>)}
                          {provided.placeholder}
                     </div>
                 )}

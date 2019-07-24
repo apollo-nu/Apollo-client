@@ -38,23 +38,24 @@ class PageBody extends Component {
                     return;
                 }
                 const courses = res.body.courses;
-                this.courses = courses.map(course => ({
-                    id: course._id,
-                    title: course.title
-                }));
-                this.courseTitles = courses.map(course => course.title.toLowerCase());
+                this.courses = courses;
+                this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
           });
+    }
+
+    displayString(course) {
+        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
     }
 
     onSearchChange(e) {
         const searchValue = e.target.value;
         let searchBody = [];
         if (searchValue) {
-            const courseTitles = this.courseTitles,
-                  courses = this.courses,
+            const courses = this.courses,
+                  searchStrings = this.searchStrings,
                   termLowerCase = searchValue.toLowerCase();
             for (let i = 0; i < this.courses.length; i++) {
-                if (courseTitles[i].includes(termLowerCase)) {
+                if (searchStrings[i].includes(termLowerCase)) {
                     searchBody.push(courses[i]);
                 }
             }
