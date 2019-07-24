@@ -25,7 +25,9 @@ class Sidebar extends Component {
 }
 
 Sidebar.propTypes = {
-    column: PropTypes.array
+    column: PropTypes.array,
+    onChange: PropTypes.func,
+    value: PropTypes.string
 }
 
 export default Sidebar;

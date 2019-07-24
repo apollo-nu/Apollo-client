@@ -43,27 +43,23 @@ class PageBody extends Component {
                     title: course.title
                 }));
                 this.courseTitles = courses.map(course => course.title.toLowerCase());
-                this.setState({searchBody: []});
           });
     }
 
     onSearchChange(e) {
-        const term = e.target.value;
-        const termLower = term.toLowerCase();
+        const searchValue = e.target.value;
         let searchBody = [];
-        if (term !== "") {
-            let courses = this.courses,
-                courseTitles = this.courseTitles;
+        if (searchValue) {
+            const courseTitles = this.courseTitles,
+                  courses = this.courses,
+                  termLowerCase = searchValue.toLowerCase();
             for (let i = 0; i < this.courses.length; i++) {
-                if (courseTitles[i].includes(termLower)) {
+                if (courseTitles[i].includes(termLowerCase)) {
                     searchBody.push(courses[i]);
                 }
             }
         }
-        this.setState({
-            searchValue: term,
-            searchBody: searchBody
-        });
+        this.setState({searchBody, searchValue});
     }
 
     onDragEnd(result) {
