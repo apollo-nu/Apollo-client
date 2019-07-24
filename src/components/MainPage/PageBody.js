@@ -51,7 +51,7 @@ class PageBody extends Component {
         const term = e.target.value;
         const termLower = term.toLowerCase();
         let searchBody = [];
-        if (term.length > 2) {
+        if (term !== "") {
             let courses = this.courses,
                 courseTitles = this.courseTitles;
             for (let i = 0; i < this.courses.length; i++) {
