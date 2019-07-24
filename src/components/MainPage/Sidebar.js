@@ -13,17 +13,12 @@ class Sidebar extends Component {
         this.state = initialData;
     }
 
-    onChange(e) {
-        this.setState({searchValue: e.target.value});
-    }
-
     render() {
-        const search = this.state.searchValue.toLowerCase();
         return (
             <div className="Sidebar">
-                <SearchBar onChange={e => this.onChange(e)}
-                           value={this.state.searchValue}/>
-                <SearchBody column={this.props.column.filter(block => (search? block.content.toLowerCase().includes(search) : false))}/>
+                <SearchBar onChange={this.props.onChange}
+                           value={this.props.value}/>
+                <SearchBody column={this.props.column}/>
             </div>
         )
     }
