@@ -18,8 +18,8 @@ class Row extends Component {
                          ref={provided.innerRef}
                          {...provided.droppableProps}
                          {...provided.droppablePlaceholder}>
-                         {this.props.items.slice(0, MAX_CARDS).map(block => <Card key={block.id}
-                                                                                  draggableId={block.id.toString()}
+                         {this.props.items.slice(0, MAX_CARDS).map(block => <Card key={block._id}
+                                                                                  draggableId={block._id}
                                                                                   index={this.props.items.map(obj => obj.id).indexOf(block.id)}
                                                                                   title={this.displayString(block)}/>)}
                          {provided.placeholder}
