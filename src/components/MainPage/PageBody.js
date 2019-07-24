@@ -23,12 +23,9 @@ class PageBody extends Component {
         super(props);
         this.onDragEnd = this.onDragEnd.bind(this);
         this.state = initialData;
-    }
 
-    courses = [];
-    courseNames = [];
-
-    componentDidMount() {
+        this.courses = [];
+        this.courseNames = [];
         this.getCourses();
     }
     
@@ -52,24 +49,21 @@ class PageBody extends Component {
 
     onSearchChange(e) {
         const term = e.target.value;
-        this.setState({searchValue: term});
-        this.search(term.toLowerCase());
-    }
-
-    search(term) {
-        if (term === "") {
-            this.setState({searchBody: []});
-        } else {
-            let searchBody = [],
-                courses = this.courses,
+        const termLower = term.toLowerCase();
+        let searchBody = [];
+        if (term.length > 2) {
+            let courses = this.courses,
                 courseTitles = this.courseTitles;
             for (let i = 0; i < this.courses.length; i++) {
-                if (courseTitles[i].includes(term)) {
+                if (courseTitles[i].includes(termLower)) {
                     searchBody.push(courses[i]);
                 }
             }
-            this.setState({searchBody: searchBody});
         }
+        this.setState({
+            searchValue: term,
+            searchBody: searchBody
+        });
     }
 
     onDragEnd(result) {
