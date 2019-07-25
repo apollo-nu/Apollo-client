@@ -7,6 +7,7 @@ import axios from "axios";
 import API from "../../config/api";
 axios.defaults.withCredentials = true;
 const coursesUrl = `${API.courses}/`;
+const boardsUrl = `${API.boards}/`;
 
 const initialData = {
     columns: {
@@ -26,6 +27,8 @@ class PageBody extends Component {
 
         this.courses = [];
         this.courseNames = [];
+
+        this.getBoards();
         this.getCourses();
     }
     
@@ -40,11 +43,29 @@ class PageBody extends Component {
                 const courses = res.body.courses;
                 this.courses = courses;
                 this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
+          })
+          .catch(err => {
+            console.log(err);
           });
     }
 
     displayString(course) {
         return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
+    }
+
+    getBoards() {
+        axios.get(boardsUrl + `user/${sessionStorage.getItem("id")}`)
+            .then(res => {
+                res = res.data;
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    setBoards() {
+        console.log("Set user board");
     }
 
     onSearchChange(e) {
