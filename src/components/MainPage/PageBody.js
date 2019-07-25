@@ -6,18 +6,18 @@ import Sidebar from "./Sidebar";
 import axios from "axios";
 import API from "../../config/api";
 axios.defaults.withCredentials = true;
+
 const coursesUrl = `${API.courses}/`;
 const boardsUrl = `${API.boards}/`;
+const rowsUrl = `${API.rows}/`;
+const cardsUrl = `${API.cards}/`;
 
 const initialData = {
-    columns: {
-        "fall": [],
-        "winter": [],
-        "spring": []
-    },
+    board: {},
     searchBody: [],
     searchValue: ""
 };
+const userId = sessionStorage.getItem("id");
 
 class PageBody extends Component {
     constructor(props) {
@@ -31,6 +31,8 @@ class PageBody extends Component {
         this.getBoards();
         this.getCourses();
     }
+
+    // Course-handling and Search methods
     
     getCourses() {
         axios.get(coursesUrl)
@@ -49,25 +51,6 @@ class PageBody extends Component {
           });
     }
 
-    displayString(course) {
-        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
-    }
-
-    getBoards() {
-        axios.get(boardsUrl + `user/${sessionStorage.getItem("id")}`)
-            .then(res => {
-                res = res.data;
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-
-    setBoards() {
-        console.log("Set user board");
-    }
-
     onSearchChange(e) {
         const searchValue = e.target.value;
         let searchBody = [];
@@ -84,11 +67,113 @@ class PageBody extends Component {
         this.setState({searchBody, searchValue});
     }
 
+    displayString(course) {
+        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
+    }
+
+    // Board-handling methods
+
+    getBoards() {
+        axios.get(boardsUrl + `user/${userId}`)
+            .then(res => {
+                res = res.data;
+                if (res.ok) {
+                    let boards = res.body.boards;
+                    if (boards.length === 0) {
+                        this.initializeFirstBoard();
+                    } else {
+                        this.setBoards(boards);
+                    }
+                } else {
+                    console.log(res.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    initializeFirstBoard() {
+        let board = {};
+        axios.post(boardsUrl + `user/${userId}`)
+            .then(res => {
+                res = res.data;
+                if (res.ok) {
+                    const boardId = res.body._id,
+                          initialRows = [
+                              "fall", 
+                              "winter", 
+                              "spring", 
+                              "summer"
+                          ];
+                    for (let title of initialRows) {
+                        axios.post(rowsUrl + `board/${boardId}`, {term: title})
+                            .then(rowRes => {
+                                rowRes = rowRes.data;
+                                if (rowRes.ok) {
+                                    board[rowRes.body._id] = [];
+                                    if (Object.keys(board).length === initialRows.length) {
+                                        this.setState({board: board});
+                                    }
+                                } else {
+                                    console.log(rowRes.message);
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    }
+                } else {
+                    console.log(res.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    // Change this to handle multiple boards
+    setBoards(boards) {
+        const boardId = boards[0]._id;
+        axios.get(rowsUrl + `board/${boardId}`)
+            .then(res => {
+                res = res.data;
+                if (res.ok) {
+                    const rows = res.body.rows;
+                    let board = {};
+                    for (let row of rows) {
+                        axios.get(cardsUrl + `row/${row._id}`)
+                            .then(cardRes => {
+                                cardRes = cardRes.data;
+                                if (cardRes.ok) {
+                                    board[row._id] = cardRes.body.cards;
+                                    if (Object.keys(board).length === rows.length) {
+                                        this.setState({board: board});
+                                    }
+                                } else {
+                                    console.log(cardRes.message);
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    }
+                } else {
+                    console.log(res.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    // Mandatory Methods
+
     onDragEnd(result) {
         const { destination, source } = result;
         if (!(destination && source)) { return; }
     
-        let columns = this.state.columns;
+        let columns = this.state.board;
         columns.searchBody = this.state.searchBody;
 
         let sourceColumn = columns[source.droppableId];
@@ -102,14 +187,14 @@ class PageBody extends Component {
 
         this.setState({searchBody: columns.searchBody});
         Reflect.deleteProperty(columns, 'searchBody');
-        this.setState(columns);
+        this.setState({board: columns});
     }
 
     render() {
         return (
             <div className="PageBody">
                 <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Board columns={this.state.columns}/>
+                    <Board columns={this.state.board}/>
                     <Sidebar value={this.state.searchValue}
                              column={this.state.searchBody}
                              onChange={e => this.onSearchChange(e)}/>
