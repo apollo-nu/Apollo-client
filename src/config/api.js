@@ -3,8 +3,8 @@ const host = ((env === "production")? "https://apollo-nu.herokuapp.com" : "http:
 
 const routes = {
     courses: host + "/courses",
-    row: host + "/rows",
-    board: host + "/board",
+    rows: host + "/rows",
+    boards: host + "/boards",
     users: host + "/users"
 };
 
