@@ -9,13 +9,13 @@ axios.defaults.withCredentials = true;
 const coursesUrl = `${API.courses}/`;
 
 const initialData = {
-    courses: [],
     columns: {
         "fall": [],
         "winter": [],
         "spring": []
     },
-    searchBody: []
+    searchBody: [],
+    searchValue: ""
 };
 
 class PageBody extends Component {
@@ -23,9 +23,9 @@ class PageBody extends Component {
         super(props);
         this.onDragEnd = this.onDragEnd.bind(this);
         this.state = initialData;
-    }
 
-    componentDidMount() {
+        this.courses = [];
+        this.courseNames = [];
         this.getCourses();
     }
     
@@ -37,16 +37,30 @@ class PageBody extends Component {
                     console.log(res.message);
                     return;
                 }
-                this.setState({courses: res.body.courses});
-                this.setSearchBody();
+                const courses = res.body.courses;
+                this.courses = courses;
+                this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
           });
     }
 
-    setSearchBody() {
-        this.setState({searchBody: this.state.courses.map(course => ({
-            id: course._id,
-            content: course.title
-        }))});
+    displayString(course) {
+        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
+    }
+
+    onSearchChange(e) {
+        const searchValue = e.target.value;
+        let searchBody = [];
+        if (searchValue) {
+            const courses = this.courses,
+                  searchStrings = this.searchStrings,
+                  termLowerCase = searchValue.toLowerCase();
+            for (let i = 0; i < this.courses.length; i++) {
+                if (searchStrings[i].includes(termLowerCase)) {
+                    searchBody.push(courses[i]);
+                }
+            }
+        }
+        this.setState({searchBody, searchValue});
     }
 
     onDragEnd(result) {
@@ -75,7 +89,9 @@ class PageBody extends Component {
             <div className="PageBody">
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     <Board columns={this.state.columns}/>
-                    <Sidebar column={this.state.searchBody}/>
+                    <Sidebar value={this.state.searchValue}
+                             column={this.state.searchBody}
+                             onChange={e => this.onSearchChange(e)}/>
                 </DragDropContext>
             </div>
         )
