@@ -166,7 +166,7 @@ class PageBody extends Component {
             })
     }
 
-    // Mandatory Methods
+    // Card Manipulation Methods
 
     onDragEnd(result) {
         const { destination, source } = result;
@@ -181,12 +181,43 @@ class PageBody extends Component {
         const item = sourceColumn.splice(source.index, 1)[0];
         destColumn.splice(destination.index, 0, item);
     
-        columns[source.droppableId] = sourceColumn;
-        columns[destination.droppableId] = destColumn;
+        const sourceId = source.droppableId;
+        const destId = destination.droppableId;
+        columns[sourceId] = sourceColumn;
+        columns[destId] = destColumn;
 
         this.setState({searchBody: columns.searchBody});
         Reflect.deleteProperty(columns, 'searchBody');
         this.setState({board: columns});
+
+        this.handleCardMove(item, sourceId, destId);
+    }
+
+    isSearchBody(id) {
+        return id === "searchBody";
+    }
+
+    handleCardMove(item, sourceId, destId) {
+        if (!this.isSearchBody(sourceId) && this.isSearchBody(destId)) {
+            axios.delete(cardsUrl + item._id)
+                .catch(err => {
+                    console.log(err);
+                });
+        } else if (!this.isSearchBody(sourceId) && !this.isSearchBody(destId)) {
+            axios.patch(cardsUrl + `row/${destId}`, {
+                cardId: item._id
+            })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else if (this.isSearchBody(sourceId) && !this.isSearchBody(destId)) {
+            axios.post(cardsUrl + `row/${destId}`, {
+                course: item._id
+            })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     }
 
     render() {
