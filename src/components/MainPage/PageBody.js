@@ -14,6 +14,7 @@ const cardsUrl = `${API.cards}/`;
 
 const initialData = {
     board: {},
+    boardIndex: 0,
     searchBody: [],
     searchValue: ""
 };
@@ -28,7 +29,7 @@ class PageBody extends Component {
         this.courses = [];
         this.courseNames = [];
 
-        this.getBoards();
+        this.getBoard();
         this.getCourses();
     }
 
@@ -40,15 +41,15 @@ class PageBody extends Component {
                 res = res.data;
                 if (!res.ok) {
                     console.log(res.message);
-                    return;
+                } else {
+                    const courses = res.body.courses;
+                    this.courses = courses;
+                    this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
                 }
-                const courses = res.body.courses;
-                this.courses = courses;
-                this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
-          })
-          .catch(err => {
-            console.log(err);
-          });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     onSearchChange(e) {
@@ -73,16 +74,49 @@ class PageBody extends Component {
 
     // Board-handling methods
 
-    getBoards() {
+    getBoard() {
         axios.get(boardsUrl + `user/${userId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    let boards = res.body.boards;
-                    if (boards.length === 0) {
-                        this.initializeFirstBoard();
+                    let board = res.body.board;
+                    if (board._id) {
+                        this.setBoard(board._id);
                     } else {
-                        this.setBoards(boards);
+                        this.initializeFirstBoard();
+                    }
+                } else {
+                    console.log(res.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    setBoard(boardId) {
+        axios.get(rowsUrl + `board/${boardId}`)
+            .then(res => {
+                res = res.data;
+                if (res.ok) {
+                    const rows = res.body.rows;
+                    let board = {};
+                    for (let row of rows) {
+                        axios.get(cardsUrl + `row/${row._id}`)
+                            .then(cardRes => {
+                                cardRes = cardRes.data;
+                                if (cardRes.ok) {
+                                    board[row._id] = cardRes.body.cards;
+                                    if (Object.keys(board).length === rows.length) {
+                                        this.setState({board: board});
+                                    }
+                                } else {
+                                    console.log(cardRes.message);
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
                     }
                 } else {
                     console.log(res.message);
@@ -130,41 +164,6 @@ class PageBody extends Component {
             .catch(err => {
                 console.log(err);
             })
-    }
-
-    // Change this to handle multiple boards
-    setBoards(boards) {
-        const boardId = boards[0]._id;
-        axios.get(rowsUrl + `board/${boardId}`)
-            .then(res => {
-                res = res.data;
-                if (res.ok) {
-                    const rows = res.body.rows;
-                    let board = {};
-                    for (let row of rows) {
-                        axios.get(cardsUrl + `row/${row._id}`)
-                            .then(cardRes => {
-                                cardRes = cardRes.data;
-                                if (cardRes.ok) {
-                                    board[row._id] = cardRes.body.cards;
-                                    if (Object.keys(board).length === rows.length) {
-                                        this.setState({board: board});
-                                    }
-                                } else {
-                                    console.log(cardRes.message);
-                                }
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            })
-                    }
-                } else {
-                    console.log(res.message);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            });
     }
 
     // Mandatory Methods
