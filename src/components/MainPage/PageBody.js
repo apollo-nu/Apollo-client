@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
-import BoardWrapper from "./BoardWrapper";
+import Board from "./Board";
 import Sidebar from "./Sidebar";
 
 import axios from "axios";
@@ -235,7 +235,7 @@ class PageBody extends Component {
         return (
             <div className="PageBody">
                 <DragDropContext onDragEnd={this.onDragEnd}>
-                    <BoardWrapper columns={this.state.board}/>
+                    <Board columns={this.state.board}/>
                     <Sidebar value={this.state.searchValue}
                              column={this.state.searchBody}
                              onChange={e => this.onSearchChange(e)}/>
