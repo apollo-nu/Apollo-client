@@ -15,6 +15,7 @@ class Column extends Component {
             <Droppable droppableId={this.props.id}>
                 {provided => (
                     <div className="Column"
+                         style={this.props.style}
                          ref={provided.innerRef}
                          {...provided.droppableProps}
                          {...provided.droppablePlaceholder}>
@@ -32,7 +33,8 @@ class Column extends Component {
 
 Column.propTypes = {
     id: PropTypes.string,
-    items: PropTypes.array
+    items: PropTypes.array,
+    style: PropTypes.object
 };
 
 export default Column;
