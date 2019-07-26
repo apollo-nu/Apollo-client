@@ -5,7 +5,7 @@ import Card from "./Card";
 
 const MAX_CARDS = 100;
 
-class Row extends Component {
+class Column extends Component {
     displayString(course) {
         return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
     }
@@ -14,7 +14,7 @@ class Row extends Component {
         return (
             <Droppable droppableId={this.props.id}>
                 {provided => (
-                    <div className="Row"
+                    <div className="Column"
                          ref={provided.innerRef}
                          {...provided.droppableProps}
                          {...provided.droppablePlaceholder}>
@@ -30,9 +30,9 @@ class Row extends Component {
     }
 }
 
-Row.propTypes = {
+Column.propTypes = {
     id: PropTypes.string,
     items: PropTypes.array
 };
 
-export default Row;
+export default Column;
