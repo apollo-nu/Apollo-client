@@ -12,6 +12,10 @@
     border: 1px solid black;
 }
 
+.BoardWrapper {
+    border: 1px solid black;
+}
+
 .Board {
     display: grid;
     justify-content: space-evenly;
