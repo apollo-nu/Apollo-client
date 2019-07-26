@@ -9,30 +9,34 @@ axios.defaults.withCredentials = true;
 const pingAPI = `${API.users}/`;
 
 class MainPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {id: ""};
+  }
+
   componentWillMount() {
     axios.get(pingAPI)
       .then(response => {
-        response = response.data;
+          response = response.data;
         if (response.ok) {
-          sessionStorage.setItem("id", response.body.id);
+          this.setState({id: response.body.id});
         } else {
-          sessionStorage.removeItem("id");
           this.props.history.push("/login/");
         }
       })
       .catch(err => {
           console.log(err);
-          sessionStorage.removeItem("id");
           this.props.history.push("/login/");
       })
   }
 
   render() {
-    return (
-      <div>
-        <PageHeader/>
-        <PageBody/>
-      </div>
+    return (this.state.id?
+          (<div>
+            <PageHeader/>
+            <PageBody id={this.state.id}/>
+          </div>
+          ) : null
     );
   }
 }
