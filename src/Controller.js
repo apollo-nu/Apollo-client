@@ -12,16 +12,13 @@ class Controller extends Component {
             .then(response => {
                 response = response.data;
                 if (response.ok) {
-                    sessionStorage.setItem("id", response.body.id);
                     this.props.history.push("/main/");
                 } else {
-                    sessionStorage.removeItem("id");
                     this.props.history.push("/login/");
                 }
             })
             .catch(err => {
                 console.log(err);
-                sessionStorage.removeItem("id");
                 this.props.history.push("/login/");
             })
     }

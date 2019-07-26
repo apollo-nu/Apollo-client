@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 import Board from "./Board";
 import Sidebar from "./Sidebar";
@@ -18,17 +19,19 @@ const initialData = {
     searchBody: [],
     searchValue: ""
 };
-const userId = sessionStorage.getItem("id");
 
 class PageBody extends Component {
     constructor(props) {
         super(props);
         this.onDragEnd = this.onDragEnd.bind(this);
         this.state = initialData;
+        this.state.userId = this.props.id;
 
         this.courses = [];
         this.courseNames = [];
+    }
 
+    componentWillMount() {
         this.getBoard();
         this.getCourses();
     }
@@ -78,7 +81,7 @@ class PageBody extends Component {
     // Board-handling methods
 
     getBoard() {
-        axios.get(boardsUrl + `user/${userId}`)
+        axios.get(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
@@ -132,7 +135,7 @@ class PageBody extends Component {
 
     initializeFirstBoard() {
         let board = {};
-        axios.post(boardsUrl + `user/${userId}`)
+        axios.post(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
@@ -195,7 +198,7 @@ class PageBody extends Component {
             this.setState({searchBody: columns.searchBody});
         }
 
-        Reflect.deleteProperty(columns, 'searchBody');
+        Reflect.deleteProperty(columns, "searchBody");
         this.setState({board: columns});
 
         this.handleCardMove(item, sourceId, destId);
@@ -240,6 +243,10 @@ class PageBody extends Component {
             </div>
         )
     }
+}
+
+PageBody.propTypes = {
+    id: PropTypes.string
 }
 
 export default PageBody;
