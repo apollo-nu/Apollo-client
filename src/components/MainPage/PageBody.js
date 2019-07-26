@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 
 const coursesUrl = `${API.courses}/`;
 const boardsUrl = `${API.boards}/`;
-const rowsUrl = `${API.rows}/`;
+const columnsUrl = `${API.columns}/`;
 const cardsUrl = `${API.cards}/`;
 
 const initialData = {
@@ -86,7 +86,7 @@ class PageBody extends Component {
                 res = res.data;
                 if (res.ok) {
                     let board = res.body.board;
-                    if (board._id) {
+                    if (board) {
                         this.setBoard(board._id);
                     } else {
                         this.initializeFirstBoard();
@@ -101,19 +101,19 @@ class PageBody extends Component {
     }
 
     setBoard(boardId) {
-        axios.get(rowsUrl + `board/${boardId}`)
+        axios.get(columnsUrl + `board/${boardId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    const rows = res.body.rows;
+                    const columns = res.body.columns;
                     let board = {};
-                    for (let row of rows) {
-                        axios.get(cardsUrl + `row/${row._id}`)
+                    for (let column of columns) {
+                        axios.get(cardsUrl + `column/${column._id}`)
                             .then(cardRes => {
                                 cardRes = cardRes.data;
                                 if (cardRes.ok) {
-                                    board[row._id] = cardRes.body.cards;
-                                    if (Object.keys(board).length === rows.length) {
+                                    board[column._id] = cardRes.body.cards;
+                                    if (Object.keys(board).length === columns.length) {
                                         this.setState({board: board});
                                     }
                                 } else {
@@ -147,16 +147,16 @@ class PageBody extends Component {
                               "summer"
                           ];
                     for (let title of initialRows) {
-                        axios.post(rowsUrl + `board/${boardId}`, {term: title})
-                            .then(rowRes => {
-                                rowRes = rowRes.data;
-                                if (rowRes.ok) {
-                                    board[rowRes.body._id] = [];
+                        axios.post(columnsUrl + `board/${boardId}`, {term: title})
+                            .then(columnRes => {
+                                columnRes = columnRes.data;
+                                if (columnRes.ok) {
+                                    board[columnRes.body._id] = [];
                                     if (Object.keys(board).length === initialRows.length) {
                                         this.setState({board: board});
                                     }
                                 } else {
-                                    console.log(rowRes.message);
+                                    console.log(columnRes.message);
                                 }
                             })
                             .catch(err => {
@@ -215,14 +215,14 @@ class PageBody extends Component {
                     console.log(err);
                 });
         } else if (!this.isSearchBody(sourceId) && !this.isSearchBody(destId)) {
-            axios.patch(cardsUrl + `row/${destId}`, {
+            axios.patch(cardsUrl + `column/${destId}`, {
                 cardId: item._id
             })
                 .catch(err => {
                     console.log(err);
                 });
         } else if (this.isSearchBody(sourceId) && !this.isSearchBody(destId)) {
-            axios.post(cardsUrl + `row/${destId}`, {
+            axios.post(cardsUrl + `column/${destId}`, {
                 course: item._id
             })
                 .catch(err => {

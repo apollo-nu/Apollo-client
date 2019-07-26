@@ -5,7 +5,7 @@ const routes = {
     courses: host + "/courses",    
     users: host + "/users",
     boards: host + "/boards",
-    rows: host + "/rows",
+    columns: host + "/columns",
     cards: host + "/cards"
 };
 

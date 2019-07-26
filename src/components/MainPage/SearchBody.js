@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Row from "./Row";
+import Column from "./Column";
 
 class SearchBody extends Component {
     render() {
         const column = this.props.column;
         return (
-            <Row id={"searchBody"}
+            <Column id={"searchBody"}
                  items={column}/>
         )
     }
