@@ -39,12 +39,15 @@ class PageBody extends Component {
         axios.get(coursesUrl)
             .then(res => {
                 res = res.data;
-                if (!res.ok) {
-                    console.log(res.message);
-                } else {
+                if (res.ok) {
                     const courses = res.body.courses;
-                    this.courses = courses;
+                    this.courses = courses.map(course => ({
+                        _id: course._id,
+                        course: course
+                    }));
                     this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
+                } else {
+                    console.log(res.message);
                 }
             })
             .catch(err => {
@@ -171,13 +174,13 @@ class PageBody extends Component {
     onDragEnd(result) {
         const { destination, source } = result;
         if (!(destination && source)) { return; }
-    
+
         let columns = this.state.board;
         columns.searchBody = this.state.searchBody;
 
         let sourceColumn = columns[source.droppableId];
         let destColumn = columns[destination.droppableId];
-    
+
         const item = sourceColumn.splice(source.index, 1)[0];
         destColumn.splice(destination.index, 0, item);
     
@@ -186,7 +189,12 @@ class PageBody extends Component {
         columns[sourceId] = sourceColumn;
         columns[destId] = destColumn;
 
-        this.setState({searchBody: columns.searchBody});
+        if (columns.searchBody.length === 1 && this.isSearchBody(destId)) {
+            this.setState({searchBody: []});
+        } else {
+            this.setState({searchBody: columns.searchBody});
+        }
+
         Reflect.deleteProperty(columns, 'searchBody');
         this.setState({board: columns});
 
