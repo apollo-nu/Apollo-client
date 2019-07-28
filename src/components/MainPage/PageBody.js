@@ -32,7 +32,7 @@ class PageBody extends Component {
     }
 
     componentWillMount() {
-        this.getBoard();
+        this.initBoard();
         this.getCourses();
     }
 
@@ -80,16 +80,16 @@ class PageBody extends Component {
 
     // Board-handling methods
 
-    getBoard() {
+    initBoard() {
         axios.get(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
                     let board = res.body.board;
                     if (board) {
-                        this.setBoard(board._id);
+                        this.getBoard(board._id);
                     } else {
-                        this.initializeFirstBoard();
+                        this.postBoard();
                     }
                 } else {
                     console.log(res.message);
@@ -100,30 +100,13 @@ class PageBody extends Component {
             });
     }
 
-    setBoard(boardId) {
+    getBoard(boardId) {
         axios.get(columnsUrl + `board/${boardId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
                     const columns = res.body.columns;
-                    let board = {};
-                    for (let column of columns) {
-                        axios.get(cardsUrl + `column/${column._id}`)
-                            .then(cardRes => {
-                                cardRes = cardRes.data;
-                                if (cardRes.ok) {
-                                    board[column._id] = cardRes.body.cards;
-                                    if (Object.keys(board).length === columns.length) {
-                                        this.setState({board: board});
-                                    }
-                                } else {
-                                    console.log(cardRes.message);
-                                }
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            })
-                    }
+                    this.getColumns(columns);
                 } else {
                     console.log(res.message);
                 }
@@ -133,43 +116,70 @@ class PageBody extends Component {
             });
     }
 
-    initializeFirstBoard() {
+    getColumns(columns) {
         let board = {};
+        for (let column of columns) {
+            axios.get(cardsUrl + `column/${column._id}`)
+                .then(cardRes => {
+                    cardRes = cardRes.data;
+                    if (cardRes.ok) {
+                        board[column._id] = cardRes.body.cards;
+                        if (Object.keys(board).length === columns.length) {
+                            this.setState({board: board});
+                        }
+                    } else {
+                        console.log(cardRes.message);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }
+
+    postBoard() {
         axios.post(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    const boardId = res.body._id,
-                          initialRows = [
-                              "fall", 
-                              "winter", 
-                              "spring", 
-                              "summer"
-                          ];
-                    for (let title of initialRows) {
-                        axios.post(columnsUrl + `board/${boardId}`, {term: title})
-                            .then(columnRes => {
-                                columnRes = columnRes.data;
-                                if (columnRes.ok) {
-                                    board[columnRes.body._id] = [];
-                                    if (Object.keys(board).length === initialRows.length) {
-                                        this.setState({board: board});
-                                    }
-                                } else {
-                                    console.log(columnRes.message);
-                                }
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    }
+                    const boardId = res.body._id
+                    const initialRows = [
+                        "fall", 
+                        "winter", 
+                        "spring", 
+                        "summer"
+                    ];
+                    this.addRowOfColumns(boardId, initialRows);
                 } else {
                     console.log(res.message);
                 }
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
+    }
+
+    addRowOfColumns(boardId, columns) {
+        let board = this.state.board,
+            columnsAdded = 0;
+        const callback = (columnRes) => {
+            columnRes = columnRes.data;
+            if (columnRes.ok) {
+                board[columnRes.body._id] = [];
+                if (++columnsAdded === columns.length) {
+                    this.setState({board: board});
+                }
+            } else {
+                console.log(columnRes.message);
+            }
+        }
+        for (let title of columns) {
+            axios.post(columnsUrl + `board/${boardId}`, {term: title})
+                .then(columnRes => callback(columnRes))
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     }
 
     // Card Manipulation Methods
