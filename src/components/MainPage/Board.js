@@ -13,12 +13,12 @@ class Board extends Component {
                 Board Title
                 <div className="Board">
                     {keys.map((key, i) => <Column key={i}
-                                                id={key}
-                                                items={columns[key]}
-                                                style={{
+                                                  id={key}
+                                                  items={columns[key]}
+                                                  style={{
                                                     "grid-column-start": keys.indexOf(key) % COLUMN_COUNT,
                                                     "grid-row-start": Math.floor(keys.indexOf(key) / COLUMN_COUNT)
-                                                }}/>)}
+                                                  }}/>)}
                 </div>
             </div>
         );
