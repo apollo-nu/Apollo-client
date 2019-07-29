@@ -7,7 +7,7 @@ const COLUMN_COUNT = 4;
 class Board extends Component {
     render() {
         const columns = this.props.columns;
-        const keys = Object.keys(columns);
+        const keys = Object.keys(columns).sort();
         return (
             <div className="BoardWrapper">
                 Board Title
@@ -16,8 +16,8 @@ class Board extends Component {
                                                   id={key}
                                                   items={columns[key]}
                                                   style={{
-                                                    gridColumnStart: keys.indexOf(key) % COLUMN_COUNT,
-                                                    gridRowStart: Math.floor(keys.indexOf(key) / COLUMN_COUNT)
+                                                    gridColumnStart: keys.indexOf(key) % COLUMN_COUNT + 1,
+                                                    gridRowStart: Math.floor(keys.indexOf(key) / COLUMN_COUNT) + 1
                                                   }}/>)}
                 </div>
             </div>
