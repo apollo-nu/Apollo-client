@@ -38,48 +38,6 @@ class PageBody extends Component {
         this.getCourses();
     }
 
-    // Course-handling and Search methods
-    
-    getCourses() {
-        axios.get(coursesUrl)
-            .then(res => {
-                res = res.data;
-                if (res.ok) {
-                    const courses = res.body.courses;
-                    this.courses = courses.map(course => ({
-                        _id: course._id,
-                        course: course
-                    }));
-                    this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
-                } else {
-                    console.log(res.message);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-
-    onSearchChange(e) {
-        const searchValue = e.target.value;
-        let searchBody = [];
-        if (searchValue) {
-            const courses = this.courses,
-                  searchStrings = this.searchStrings,
-                  termLowerCase = searchValue.toLowerCase();
-            for (let i = 0; i < this.courses.length; i++) {
-                if (searchStrings[i].includes(termLowerCase)) {
-                    searchBody.push(courses[i]);
-                }
-            }
-        }
-        this.setState({searchBody, searchValue});
-    }
-
-    displayString(course) {
-        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
-    }
-
     // Board-handling methods
 
     initBoard() {
@@ -139,11 +97,6 @@ class PageBody extends Component {
         }
     }
 
-    /* 
-     * In adding new row, first call GET terms (max 4 for now)
-     * Loop through these terms rather than initialTerms, and set _id accordingly
-     * Sort columns by term id, increasing
-     */
     postBoard() {
         axios.post(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
@@ -176,27 +129,69 @@ class PageBody extends Component {
             });
     }
 
-    addRowOfColumns(boardId, columns) {
+    addRowOfColumns(boardId, termIds) {
         let board = this.state.board,
             columnsAdded = 0;
         const callback = columnRes => {
             columnRes = columnRes.data;
             if (columnRes.ok) {
                 board[columnRes.body._id] = [];
-                if (++columnsAdded === columns.length) {
+                if (++columnsAdded === termIds.length) {
                     this.setState({board: board});
                 }
             } else {
                 console.log(columnRes.message);
             }
         }
-        for (let title of columns) {
-            axios.post(columnsUrl + `board/${boardId}`, {term: title})
+        for (let id of termIds) {
+            axios.post(columnsUrl + `board/${boardId}`, {term: id})
                 .then(columnRes => callback(columnRes))
                 .catch(err => {
                     console.log(err);
                 });
         }
+    }
+
+    // Course-handling and Search methods
+
+    getCourses() {
+        axios.get(coursesUrl)
+            .then(res => {
+                res = res.data;
+                if (res.ok) {
+                    const courses = res.body.courses;
+                    this.courses = courses.map(course => ({
+                        _id: course._id,
+                        course: course
+                    }));
+                    this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
+                } else {
+                    console.log(res.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    onSearchChange(e) {
+        const searchValue = e.target.value;
+        let searchBody = [];
+        if (searchValue) {
+            const courses = this.courses,
+                    searchStrings = this.searchStrings,
+                    termLowerCase = searchValue.toLowerCase();
+            for (let i = 0; i < this.courses.length; i++) {
+                if (searchStrings[i].includes(termLowerCase)) {
+                    searchBody.push(courses[i]);
+                }
+            }
+        }
+        this.setState({searchBody, searchValue});
+    }
+
+    displayString(course) {
+        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
     }
 
     // Card Manipulation Methods
@@ -231,10 +226,6 @@ class PageBody extends Component {
         this.handleCardMove(item, sourceId, destId);
     }
 
-    isSearchBody(id) {
-        return id === "searchBody";
-    }
-
     handleCardMove(item, sourceId, destId) {
         if (!this.isSearchBody(sourceId) && this.isSearchBody(destId)) {
             axios.delete(cardsUrl + item._id)
@@ -256,6 +247,10 @@ class PageBody extends Component {
                     console.log(err);
                 });
         }
+    }
+
+    isSearchBody(id) {
+        return id === "searchBody";
     }
 
     render() {
