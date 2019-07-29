@@ -214,7 +214,7 @@ class PageBody extends Component {
         columns[sourceId] = sourceColumn;
         columns[destId] = destColumn;
 
-        if (columns.searchBody.length === 1 && this.isSearchBody(destId)) {
+        if (columns.searchBody.length <= 1 && this.isSearchBody(destId)) {
             this.setState({searchBody: []});
         } else {
             this.setState({searchBody: columns.searchBody});
@@ -254,6 +254,7 @@ class PageBody extends Component {
     }
 
     render() {
+        console.log(this.state.board);
         return (
             <div className="PageBody">
                 <DragDropContext onDragEnd={this.onDragEnd}>
