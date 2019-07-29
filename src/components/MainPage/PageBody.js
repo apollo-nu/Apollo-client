@@ -9,6 +9,7 @@ import API from "../../config/api";
 axios.defaults.withCredentials = true;
 
 const coursesUrl = `${API.courses}/`;
+const termsUrl = `${API.terms}/`;
 const boardsUrl = `${API.boards}/`;
 const columnsUrl = `${API.columns}/`;
 const cardsUrl = `${API.cards}/`;
@@ -19,6 +20,7 @@ const initialData = {
     searchBody: [],
     searchValue: ""
 };
+const COLUMNS_PER_ROW = 4;
 
 class PageBody extends Component {
     constructor(props) {
@@ -137,19 +139,34 @@ class PageBody extends Component {
         }
     }
 
+    /* 
+     * In adding new row, first call GET terms (max 4 for now)
+     * Loop through these terms rather than initialTerms, and set _id accordingly
+     * Sort columns by term id, increasing
+     */
     postBoard() {
         axios.post(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    const boardId = res.body._id
-                    const initialRows = [
-                        "fall", 
-                        "winter", 
-                        "spring", 
-                        "summer"
-                    ];
-                    this.addRowOfColumns(boardId, initialRows);
+                    const boardId = res.body._id;
+                    this.getTerms(boardId);
+                } else {
+                    console.log(res.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    getTerms(boardId) {
+        axios.get(termsUrl)
+            .then(res => {
+                res = res.data;
+                if (res.ok) {
+                    const terms = res.body.terms.sort((a, b) => b.id - a.id).splice(0, COLUMNS_PER_ROW);
+                    this.addRowOfColumns(boardId, terms.map(term => term._id));
                 } else {
                     console.log(res.message);
                 }
@@ -162,7 +179,7 @@ class PageBody extends Component {
     addRowOfColumns(boardId, columns) {
         let board = this.state.board,
             columnsAdded = 0;
-        const callback = (columnRes) => {
+        const callback = columnRes => {
             columnRes = columnRes.data;
             if (columnRes.ok) {
                 board[columnRes.body._id] = [];
