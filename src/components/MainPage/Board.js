@@ -16,8 +16,8 @@ class Board extends Component {
                                                   id={key}
                                                   items={columns[key]}
                                                   style={{
-                                                    "grid-column-start": keys.indexOf(key) % COLUMN_COUNT,
-                                                    "grid-row-start": Math.floor(keys.indexOf(key) / COLUMN_COUNT)
+                                                    gridColumnStart: keys.indexOf(key) % COLUMN_COUNT,
+                                                    gridRowStart: Math.floor(keys.indexOf(key) / COLUMN_COUNT)
                                                   }}/>)}
                 </div>
             </div>
