@@ -241,8 +241,26 @@ class PageBody extends Component {
                 });
         } else if (this.isSearchBody(sourceId) && !this.isSearchBody(destId)) {
             axios.post(cardsUrl + `column/${destId}`, {
-                course: item._id
+                course: item.course._id
             })
+                .then(res => {
+                    res = res.data;
+                    if (res.ok) {
+                        let board = this.state.board;
+                        const column = board[destId];
+                        const card = res.body.card;
+                        for (let i in column) {
+                            if (column[i]._id === card.course) {
+                                column[i]._id = card._id;
+                                board[destId] = column;
+                                break;
+                            }
+                        }
+                        this.setState({board: board});
+                    } else {
+                        console.log(res.message);
+                    }
+                })
                 .catch(err => {
                     console.log(err);
                 });
@@ -254,7 +272,6 @@ class PageBody extends Component {
     }
 
     render() {
-        console.log(this.state.board);
         return (
             <div className="PageBody">
                 <DragDropContext onDragEnd={this.onDragEnd}>
