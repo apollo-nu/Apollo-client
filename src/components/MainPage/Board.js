@@ -7,7 +7,7 @@ const COLUMN_COUNT = 4;
 class Board extends Component {
     render() {
         const columns = this.props.columns;
-        const keys = Object.keys(columns).sort((a, b) => columns[a].column.term.name > columns[b].column.term.name ? 1:-1);
+        const keys = Object.keys(columns).sort((a, b) => (columns[a].column.term.name > columns[b].column.term.name ? 1:-1));
         return (
             <div className="BoardWrapper">
                 Board Title
