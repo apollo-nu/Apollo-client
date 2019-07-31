@@ -21,7 +21,8 @@ const initialData = {
         columns: {}
     },
     searchBody: [],
-    searchValue: ""
+    searchValue: "",
+    yearPickerVisible: false
 };
 const COLUMNS_PER_ROW = 4;
 
@@ -52,7 +53,7 @@ class PageBody extends Component {
                     if (board) {
                         this.getBoard(board);
                     } else {
-                        this.postBoard();
+                        this.setState({yearPickerVisible: true});
                     }
                 } else {
                     console.log(res.message);
@@ -110,6 +111,11 @@ class PageBody extends Component {
     }
 
     // New User Flow
+
+    onYearPickerSubmit() {
+        this.postBoard();
+        this.setState({yearPickerVisible: false});
+    }
 
     postBoard() {
         axios.post(boardsUrl + `user/${this.state.userId}`)
@@ -298,7 +304,7 @@ class PageBody extends Component {
     render() {
         return (
             <div className="PageBody">
-                <YearPicker/>
+                {this.state.yearPickerVisible? <YearPicker onSubmit={this.onYearPickerSubmit.bind(this)}/> : null}
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     <Board columns={this.state.board.columns}/>
                     <Sidebar value={this.state.searchValue}
