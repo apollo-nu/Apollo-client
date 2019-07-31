@@ -6,32 +6,50 @@ import "react-dropdown/style.css";
 const YEAR_RANGE = 6;
 
 class YearPicker extends Component {
-    componentWillMount() {
+    constructor(props) {
+        super(props);
+
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
         
         let yearRange = [];
-        for (let i = currentYear - YEAR_RANGE + 1; i < currentYear + YEAR_RANGE; i++) {
-            yearRange.push(i);
+        for (let year = currentYear - YEAR_RANGE + 1; year < currentYear + YEAR_RANGE; year++) {
+            yearRange.push({
+                value: year,
+                label: `${year}-${(year + 1).toString().slice(2, 4)}`
+            });
         }
-        this.yearOptions = yearRange.map(year => `${year}-${(year + 1).toString().slice(2, 4)}`);
+        this.years = yearRange;
+
+        const DEFAULT_INDEX = Math.floor(yearRange.length / 2);
+        this.state = {
+            startYear: yearRange[DEFAULT_INDEX],
+            endYear: yearRange[DEFAULT_INDEX],
+        };
+    }
+
+    handleSubmit() {
+        if (this.state.startYear.value > this.state.endYear.value) {
+            return;
+        }
+        this.props.onSubmit();
     }
 
     render() {
-        const years = this.yearOptions;
-        const DEFAULT_INDEX = Math.floor(years.length / 2);
         return (
             <div className="YearPicker">
                 Select Academic Years to Plan:
                 <div className="YearDropdownWrapper">
-                    <Dropdown options={years}
-                              value={years[DEFAULT_INDEX]}/>
+                    <Dropdown options={this.years}
+                              value={this.state.startYear}
+                              onChange={year => this.setState({startYear: year})}/>
                     -
-                    <Dropdown options={years}
-                              value={years[DEFAULT_INDEX]}/>
+                    <Dropdown options={this.years}
+                              value={this.state.endYear}
+                              onChange={year => this.setState({endYear: year})}/>
                 </div>
                 <input type="button"
-                       onClick={this.props.onSubmit}
+                       onClick={this.handleSubmit.bind(this)}
                        value="Create Board"/>
             </div>
         )
