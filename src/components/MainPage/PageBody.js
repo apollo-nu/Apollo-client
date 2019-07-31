@@ -24,7 +24,6 @@ const initialData = {
     searchValue: "",
     yearPickerVisible: false
 };
-const COLUMNS_PER_ROW = 4;
 
 class PageBody extends Component {
     constructor(props) {
@@ -112,17 +111,17 @@ class PageBody extends Component {
 
     // New User Flow
 
-    onYearPickerSubmit() {
-        this.postBoard();
+    onYearPickerSubmit(startYear, endYear) {
+        this.postBoard(startYear.value, endYear.value);
         this.setState({yearPickerVisible: false});
     }
 
-    postBoard() {
+    postBoard(startYear, endYear) {
         axios.post(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    this.getTerms(res.body.board);
+                    this.getTerms(res.body.board, startYear, endYear);
                 } else {
                     console.log(res.message);
                 }
@@ -132,12 +131,18 @@ class PageBody extends Component {
             });
     }
 
-    getTerms(board) {
+    getTerms(board, startYear, endYear) {
         axios.get(termsUrl)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    const terms = res.body.terms.sort((a, b) => b.id - a.id).splice(0, COLUMNS_PER_ROW);
+                    let terms = res.body.terms.sort((a, b) => a.id - b.id);
+                    const termNames = terms.map(term => term.name);
+                    const startIndex = termNames.indexOf(`${startYear} Fall`),
+                          endIndex = termNames.indexOf(`${endYear + 1} Summer`);
+                    if (startIndex !== -1 && endIndex !== -1) {
+                        terms = terms.slice(startIndex, endIndex + 1);
+                    }
                     this.addRowOfColumns(board, terms.map(term => term._id));
                 } else {
                     console.log(res.message);
