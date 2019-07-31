@@ -21,10 +21,10 @@ class YearPicker extends Component {
         }
         this.years = yearRange;
 
-        const DEFAULT_INDEX = Math.floor(yearRange.length / 2);
+        const DEFAULT_YEAR = yearRange[Math.floor(yearRange.length / 2)];
         this.state = {
-            startYear: yearRange[DEFAULT_INDEX],
-            endYear: yearRange[DEFAULT_INDEX],
+            startYear: DEFAULT_YEAR,
+            endYear: DEFAULT_YEAR
         };
     }
 
@@ -32,7 +32,7 @@ class YearPicker extends Component {
         if (this.state.startYear.value > this.state.endYear.value) {
             return;
         }
-        this.props.onSubmit();
+        this.props.onSubmit(this.state.startYear, this.state.endYear);
     }
 
     render() {
