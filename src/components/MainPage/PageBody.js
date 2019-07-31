@@ -304,13 +304,14 @@ class PageBody extends Component {
     render() {
         return (
             <div className="PageBody">
-                {this.state.yearPickerVisible? <YearPicker onSubmit={this.onYearPickerSubmit.bind(this)}/> : null}
-                <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Board columns={this.state.board.columns}/>
-                    <Sidebar value={this.state.searchValue}
-                             column={this.state.searchBody}
-                             onChange={e => this.onSearchChange(e)}/>
-                </DragDropContext>
+                {this.state.yearPickerVisible? 
+                    <YearPicker onSubmit={this.onYearPickerSubmit.bind(this)}/> : 
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        <Board columns={this.state.board.columns}/>
+                        <Sidebar value={this.state.searchValue}
+                                column={this.state.searchBody}
+                                onChange={e => this.onSearchChange(e)}/>
+                    </DragDropContext>}
             </div>
         )
     }

@@ -70,6 +70,12 @@
     border: 1px solid black;
 }
 
+.YearDropdownWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 /* Creds */
 .ErrorText {
     color: red;
