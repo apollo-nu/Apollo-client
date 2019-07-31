@@ -140,8 +140,15 @@ class PageBody extends Component {
                     const termNames = terms.map(term => term.name);
                     const startIndex = termNames.indexOf(`${startYear} Fall`),
                           endIndex = termNames.indexOf(`${endYear + 1} Summer`);
-                    if (startIndex !== -1 && endIndex !== -1) {
-                        terms = terms.slice(startIndex, endIndex + 1);
+                    if (startIndex === -1) {
+                        console.log("Start year is in the future.");
+                    } else {
+                        terms = terms.slice(startIndex);
+                    }
+                    if (endIndex === -1) {
+                        console.log("End year is in the future.");
+                    } else {
+                        terms = terms.slice(0, endIndex + 1);
                     }
                     this.addRowOfColumns(board, terms.map(term => term._id));
                 } else {
