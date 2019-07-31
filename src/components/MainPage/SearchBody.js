@@ -7,7 +7,8 @@ class SearchBody extends Component {
         const column = this.props.column;
         return (
             <Column id={"searchBody"}
-                 items={column}/>
+                    name={""}
+                    items={column}/>
         )
     }
 }
