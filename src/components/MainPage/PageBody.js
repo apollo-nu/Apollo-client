@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 import Board from "./Board";
 import Sidebar from "./Sidebar";
+import YearPicker from "./YearPicker";
 
 import axios from "axios";
 import API from "../../config/api";
@@ -297,6 +298,7 @@ class PageBody extends Component {
     render() {
         return (
             <div className="PageBody">
+                <YearPicker/>
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     <Board columns={this.state.board.columns}/>
                     <Sidebar value={this.state.searchValue}
