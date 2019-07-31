@@ -19,6 +19,7 @@ class Column extends Component {
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         {...provided.droppablePlaceholder}>
+                        {this.props.name}
                         {this.props.items.slice(0, MAX_CARDS).map(block => <Card key={block._id}
                                                                                  draggableId={block._id}
                                                                                  index={this.props.items.indexOf(block)}
@@ -34,6 +35,7 @@ class Column extends Component {
 Column.propTypes = {
     id: PropTypes.string,
     items: PropTypes.array,
+    name: PropTypes.string,
     style: PropTypes.object
 };
 
