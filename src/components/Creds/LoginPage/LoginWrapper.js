@@ -4,19 +4,12 @@ import LoginForm from "./LoginForm";
 
 // UI wrapper for the input form
 class LoginWrapper extends Component {
-  // Callback that redirects to the createAccount page
-  moveToCreate() {
-    this.props.history.push("/createAccount/");
-  }
-
   render() {
     return (
-        <div>
-          Log In:
-          <LoginForm history={this.props.history}/>
-          <input type="button"
-                 value="Create Account"
-                 onClick={this.moveToCreate.bind(this)}/>
+        <div className="LoginWrapper">
+          <div className="LoginForm">
+            <LoginForm history={this.props.history}/>
+          </div>
         </div>
     );
   }

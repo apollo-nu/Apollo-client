@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 class Submit extends Component {
     render() {
         return (
-            <input type="button"
+            <input className="SubmitButton"
+                   type="button"
                    onClick={this.props.onClick}
                    value={this.props.value}/>
         )

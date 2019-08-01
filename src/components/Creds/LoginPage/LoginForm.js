@@ -58,6 +58,7 @@ class LoginForm extends Component {
                 <label>
                     Email:
                     <Email name="email"
+                           placeholder="Email Address"
                            onChange={e => {
                                 this.setState({
                                    errorVisible: false,
@@ -70,6 +71,7 @@ class LoginForm extends Component {
                 <label>
                     Password:
                     <Password name="password"
+                              placeholder="Password"
                               onChange={e => {
                                     this.setState({
                                         errorVisible: false,
@@ -80,7 +82,7 @@ class LoginForm extends Component {
                 </label>
                 <br/>
                 {this.state.errorVisible? <ErrorText value={this.state.errorText}/> : null}
-                <Submit value="Submit"
+                <Submit value="Log In"
                         onClick={this.login.bind(this)}/>
             </div>
         )
