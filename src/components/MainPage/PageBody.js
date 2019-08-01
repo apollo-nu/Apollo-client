@@ -136,21 +136,8 @@ class PageBody extends Component {
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    let terms = res.body.terms.sort((a, b) => a.id - b.id);
-                    const termNames = terms.map(term => term.name);
-                    const startIndex = termNames.indexOf(`${startYear} Fall`),
-                          endIndex = termNames.indexOf(`${endYear + 1} Summer`);
-                    if (startIndex === -1) {
-                        console.log("Start year is in the future.");
-                    } else {
-                        terms = terms.slice(startIndex);
-                    }
-                    if (endIndex === -1) {
-                        console.log("End year is in the future.");
-                    } else {
-                        terms = terms.slice(0, endIndex + 1);
-                    }
-                    this.addRowOfColumns(board, terms.map(term => term._id));
+                    const termNames = this.modifyTerms(res.body.terms, startYear, endYear);
+                    this.addRowOfColumns(board, termNames);
                 } else {
                     console.log(res.message);
                 }
@@ -160,7 +147,44 @@ class PageBody extends Component {
             });
     }
 
-    addRowOfColumns(board, termIds) {
+    termName(year, seasonIndex) {
+        const seasons = ["Fall", "Winter", "Spring", "Summer"];
+        return `${year} ${seasons[seasonIndex]}`;
+    }
+
+    modifyTerms(terms, startYear, endYear) {
+        terms = terms.sort((a, b) => a.id - b.id);
+        const termNames = terms.map(term => term.name);
+
+        const startName = this.termName(startYear, 0),
+              endName = this.termName(endYear + 1, 3);
+        const startIndex = termNames.indexOf(startName),
+              endIndex = termNames.indexOf(endName);
+        
+        if (startIndex === -1) {
+            terms = [];
+            terms.push({id: 0, name: startName});
+        } else if (endIndex === -1) {
+            terms = terms.slice(startIndex);
+        } else {
+            terms = terms.slice(startIndex, endIndex + 1);
+        }
+
+        const seasons = ["Fall", "Winter", "Spring", "Summer"];
+        while (terms[terms.length - 1].name !== endName) {
+            const prevItem = terms[terms.length - 1];
+            const prevSeason = prevItem.name.slice(5);
+            const nextSeasonIndex = (seasons.indexOf(prevSeason) + 1) % seasons.length;
+            const year = parseInt(prevItem.name.slice(0, 4)) + (nextSeasonIndex === 1 ? 1 : 0);
+            terms.push({
+                id: prevItem.id + 10,
+                name: this.termName(year, nextSeasonIndex)
+            });
+        }
+        return terms.map(term => term.name);
+    }
+
+    addRowOfColumns(board, termNames) {
         board = {
             board: board,
             columns: {}
@@ -174,15 +198,15 @@ class PageBody extends Component {
                     column: column,
                     cards: []
                 };
-                if (++columnsAdded === termIds.length) {
+                if (++columnsAdded === termNames.length) {
                     this.setState({board: board});
                 }
             } else {
                 console.log(columnRes.message);
             }
         }
-        for (let id of termIds) {
-            axios.post(columnsUrl + `board/${board.board._id}`, {term: id})
+        for (let term of termNames) {
+            axios.post(columnsUrl + `board/${board.board._id}`, {name: term})
                 .then(columnRes => callback(columnRes))
                 .catch(err => {
                     console.log(err);
