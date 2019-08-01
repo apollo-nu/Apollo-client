@@ -13,9 +13,10 @@ class LoginPage extends Component {
     return (
       <div className="AuthPage">
         <LoginWrapper history={this.props.history}/>
-        <input type="button"
-               value="New User? Sign Up"
-               onClick={this.moveToCreate.bind(this)}/>
+        <div className="NavText"
+             onClick={this.moveToCreate.bind(this)}>
+            New User? Sign Up
+        </div>
       </div>
     );
   }
