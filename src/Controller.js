@@ -7,6 +7,7 @@ axios.defaults.withCredentials = true;
 const pingAPI = `${API.users}/`;
 
 class Controller extends Component {
+    // Presents correct page based on presence of valid jwt cookie
     componentWillMount() {
         axios.get(pingAPI)
             .then(response => {
