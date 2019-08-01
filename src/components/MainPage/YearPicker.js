@@ -6,7 +6,7 @@ import "react-dropdown/style.css";
 class YearPicker extends Component {
     constructor(props) {
         super(props);
-        this.setUpDropDowns();
+        this.state = this.setUpDropDowns();
     }
 
     // Generates years to display in drop-down menus
@@ -25,7 +25,7 @@ class YearPicker extends Component {
         this.years = years;
 
         const DEFAULT_YEAR = years[Math.floor(years.length / 2)];
-        this.state = {
+        return {
             startYear: DEFAULT_YEAR,
             endYear: DEFAULT_YEAR
         };

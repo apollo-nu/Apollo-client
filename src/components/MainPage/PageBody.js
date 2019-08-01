@@ -218,21 +218,31 @@ class PageBody extends Component {
     // Filtering function, returns courses that match text field
     onSearchChange(e) {
         const searchValue = e.target.value;
-        let searchBody = [];
+        let courseResults = [],
+            nameResults = [];
         if (searchValue) {
             const courses = this.courses,
                   searchStrings = this.searchStrings,
                   termLowerCase = searchValue.toLowerCase();
             for (let i = 0; i < this.courses.length; i++) {
-                if (searchStrings[i].includes(termLowerCase)) {
-                    searchBody.push({
+                const searchString = searchStrings[i];
+                if (searchString.includes(termLowerCase)) {
+                    const course = {
                         _id: courses[i]._id,
                         course: courses[i]
-                    });
+                    };
+                    if (searchString.indexOf(termLowerCase) === 0) {
+                        courseResults.push(course);
+                    } else {
+                        nameResults.push(course);
+                    }
                 }
             }
         }
-        this.setState({searchBody, searchValue});
+        this.setState({
+            searchBody: courseResults.concat(nameResults),
+            searchValue: searchValue
+        });
     }
 
     /* 
