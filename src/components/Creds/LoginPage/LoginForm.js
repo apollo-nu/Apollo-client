@@ -54,36 +54,28 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <div>
-                <label>
-                    Email:
-                    <Email name="email"
-                           placeholder="Email Address"
-                           onChange={e => {
+            <div className="LoginForm">
+                <Email name="email"
+                        placeholder="Email Address"
+                        onChange={e => {
+                            this.setState({
+                                errorVisible: false,
+                                email: e.target.value
+                            });
+                        }}
+                        value={this.state.email}/>
+                <Password name="password"
+                            placeholder="Password"
+                            onChange={e => {
                                 this.setState({
-                                   errorVisible: false,
-                                   email: e.target.value
+                                    errorVisible: false,
+                                    password: e.target.value
                                 });
-                           }}
-                           value={this.state.email}/>
-                </label>
-                <br/>
-                <label>
-                    Password:
-                    <Password name="password"
-                              placeholder="Password"
-                              onChange={e => {
-                                    this.setState({
-                                        errorVisible: false,
-                                        password: e.target.value
-                                    });
-                              }}
-                              value={this.state.password}/>
-                </label>
-                <br/>
-                {this.state.errorVisible? <ErrorText value={this.state.errorText}/> : null}
+                            }}
+                            value={this.state.password}/>
                 <Submit value="Log In"
                         onClick={this.login.bind(this)}/>
+                {this.state.errorVisible? <ErrorText value={this.state.errorText}/> : null}
             </div>
         )
     }

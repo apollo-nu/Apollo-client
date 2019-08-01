@@ -7,9 +7,10 @@ class LoginWrapper extends Component {
   render() {
     return (
         <div className="LoginWrapper">
-          <div className="LoginForm">
-            <LoginForm history={this.props.history}/>
+          <div className="AuthHeaderText">
+            Log in to Apollo
           </div>
+          <LoginForm history={this.props.history}/>
         </div>
     );
   }

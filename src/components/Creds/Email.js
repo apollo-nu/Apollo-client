@@ -6,7 +6,7 @@ class Email extends Component {
     render() {
         return (
             <input type="email"
-                   className="Email"
+                   className="AuthTextField"
                    name={this.props.name}
                    placeholder={this.props.placeholder}
                    onChange={this.props.onChange}

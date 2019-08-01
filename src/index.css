@@ -103,27 +103,46 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 500px;
-    height: 400px;
+    width: 450px;
+    height: 300px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     border-radius: 15px;
     background-color: white;
 }
 
 .LoginForm {
-    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 75%;
+    height: 60%;
 }
 
-.Email {
-    border: 1px solid black;
+.AuthHeaderText {
+    color: #7550ab;
+    font-size: 18pt;
+    margin-bottom: 25px;
 }
 
-.Password {
-    border: 1px solid black;
+.AuthTextField {
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    border-radius: 5px;
 }
 
 .SubmitButton {
+    width: 100%;
+    padding: 8px;
+    font-size: 20px;
+    border-radius: 5px;
     color: white;
     background-color: #7550ab;
+    cursor: pointer;
+    cursor: -moz-pointer;
+    cursor: -webkit-pointer;
 }
 
 .ErrorText {
