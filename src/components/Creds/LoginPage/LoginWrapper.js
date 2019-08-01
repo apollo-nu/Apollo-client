@@ -4,6 +4,7 @@ import LoginForm from "./LoginForm";
 
 // UI wrapper for the input form
 class LoginWrapper extends Component {
+  // Callback that redirects to the createAccount page
   moveToCreate() {
     this.props.history.push("/createAccount/");
   }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Column from "./Column";
 
+// Represents the numeric order of seasons as they occur in a calendar year
 const seasonMap = {
     "Winter": 1,
     "Spring": 2, 
@@ -11,9 +12,9 @@ const seasonMap = {
 const COLUMN_COUNT = 4;
 
 class Board extends Component {
-    render() {
-        const columns = this.props.columns;
-        let keys = Object.keys(columns).sort((a, b) => {
+    // Sorts columns in correct date order based on name
+    sortColumns(columns) {
+        return Object.keys(columns).sort((a, b) => {
             const aName = columns[a].column.name,
                   bName = columns[b].column.name;
             if (aName.slice(0, 4) === bName.slice(0, 4)) {
@@ -21,6 +22,11 @@ class Board extends Component {
             }
             return aName > bName? 1:-1;
         });
+    }
+
+    render() {
+        const columns = this.props.columns;
+        const keys = this.sortColumns(columns);
         return (
             <div className="BoardWrapper">
                 <div className="Board">

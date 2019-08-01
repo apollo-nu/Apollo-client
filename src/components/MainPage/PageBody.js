@@ -10,7 +10,6 @@ import API from "../../config/api";
 axios.defaults.withCredentials = true;
 
 const coursesUrl = `${API.courses}/`;
-const termsUrl = `${API.terms}/`;
 const boardsUrl = `${API.boards}/`;
 const columnsUrl = `${API.columns}/`;
 const cardsUrl = `${API.cards}/`;
@@ -24,6 +23,7 @@ const initialData = {
     searchValue: "",
     yearPickerVisible: false
 };
+const seasons = ["Fall", "Winter", "Spring", "Summer"];
 
 class PageBody extends Component {
     constructor(props) {
@@ -41,8 +41,7 @@ class PageBody extends Component {
         this.getCourses();
     }
 
-    // Board-handling methods
-
+    // Gets board and decides whether returning or new user flow is used.
     initBoard() {
         axios.get(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
@@ -50,7 +49,7 @@ class PageBody extends Component {
                 if (res.ok) {
                     let board = res.body.board;
                     if (board) {
-                        this.getBoard(board);
+                        this.getColumns(board);
                     } else {
                         this.setState({yearPickerVisible: true});
                     }
@@ -63,16 +62,19 @@ class PageBody extends Component {
             });
     }
 
-    // Returning User Flow
+    /* 
+        Returning User Flow
+                             */
 
-    getBoard(board) {
+    // Finds existing columns for the user's board
+    getColumns(board) {
         const boardId = board._id;
         axios.get(columnsUrl + `board/${boardId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
                     const columns = res.body.columns;
-                    this.getColumns(columns, board);
+                    this.getCards(columns, board);
                 } else {
                     console.log(res.message);
                 }
@@ -82,7 +84,8 @@ class PageBody extends Component {
             });
     }
 
-    getColumns(columns, board) {
+    // Finds existing cards for each column and sets the board state
+    getCards(columns, board) {
         let newBoard = {
             board: board,
             columns: {}
@@ -109,19 +112,27 @@ class PageBody extends Component {
         }
     }
 
-    // New User Flow
+    /* 
+        New User Flow
+                        */
 
+    // Callback that fires on year picker submit
     onYearPickerSubmit(startYear, endYear) {
         this.postBoard(startYear.value, endYear.value);
         this.setState({yearPickerVisible: false});
     }
 
+    // Creates a new board for the user
     postBoard(startYear, endYear) {
         axios.post(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    this.getTerms(res.body.board, startYear, endYear);
+                    const columnNames = this.getColumnNames(startYear, endYear);
+                    this.addColumns({
+                        board: res.body.board,
+                        columns: {}
+                    }, columnNames);
                 } else {
                     console.log(res.message);
                 }
@@ -131,64 +142,27 @@ class PageBody extends Component {
             });
     }
 
-    getTerms(board, startYear, endYear) {
-        axios.get(termsUrl)
-            .then(res => {
-                res = res.data;
-                if (res.ok) {
-                    const termNames = this.modifyTerms(res.body.terms, startYear, endYear);
-                    this.addRowOfColumns(board, termNames);
-                } else {
-                    console.log(res.message);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-
-    termName(year, seasonIndex) {
-        const seasons = ["Fall", "Winter", "Spring", "Summer"];
+    // Helper function to make column names out of year and season
+    columnName(year, seasonIndex) {
         return `${year} ${seasons[seasonIndex]}`;
     }
 
-    modifyTerms(terms, startYear, endYear) {
-        terms = terms.sort((a, b) => a.id - b.id);
-        const termNames = terms.map(term => term.name);
-
-        const startName = this.termName(startYear, 0),
-              endName = this.termName(endYear + 1, 3);
-        const startIndex = termNames.indexOf(startName),
-              endIndex = termNames.indexOf(endName);
-        
-        if (startIndex === -1) {
-            terms = [];
-            terms.push({id: 0, name: startName});
-        } else if (endIndex === -1) {
-            terms = terms.slice(startIndex);
-        } else {
-            terms = terms.slice(startIndex, endIndex + 1);
-        }
-
-        const seasons = ["Fall", "Winter", "Spring", "Summer"];
-        while (terms[terms.length - 1].name !== endName) {
-            const prevItem = terms[terms.length - 1];
-            const prevSeason = prevItem.name.slice(5);
+    // Generates array of column names to create and POST
+    getColumnNames(startYear, endYear) {
+        let names = [this.columnName(startYear, 0)];
+        const endName = this.columnName(endYear + 1, 3);
+        while (names[names.length - 1] !== endName) {
+            const prevName = names[names.length - 1];
+            const prevSeason = prevName.slice(5);
             const nextSeasonIndex = (seasons.indexOf(prevSeason) + 1) % seasons.length;
-            const year = parseInt(prevItem.name.slice(0, 4), 10) + (nextSeasonIndex === 1 ? 1 : 0);
-            terms.push({
-                id: prevItem.id + 10,
-                name: this.termName(year, nextSeasonIndex)
-            });
+            const year = parseInt(prevName.slice(0, 4), 10) + (nextSeasonIndex === 1 ? 1 : 0);
+            names.push(this.columnName(year, nextSeasonIndex));
         }
-        return terms.map(term => term.name);
+        return names;
     }
 
-    addRowOfColumns(board, termNames) {
-        board = {
-            board: board,
-            columns: {}
-        }
+    // POSTs columns and sets board state
+    addColumns(board, termNames) {
         let columnsAdded = 0;
         const callback = columnRes => {
             columnRes = columnRes.data;
@@ -214,8 +188,11 @@ class PageBody extends Component {
         }
     }
 
-    // Course-handling and Search methods
+    /* 
+        Course-handling and Search methods
+                                            */
 
+    // Returns list of all courses
     getCourses() {
         axios.get(coursesUrl)
             .then(res => {
@@ -233,31 +210,46 @@ class PageBody extends Component {
             });
     }
 
+    // Helper function to generate search strings of cards
+    displayString(course) {
+        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
+    }
+
+    // Filtering function, returns courses that match text field
     onSearchChange(e) {
         const searchValue = e.target.value;
-        let searchBody = [];
+        let courseResults = [],
+            nameResults = [];
         if (searchValue) {
             const courses = this.courses,
                   searchStrings = this.searchStrings,
                   termLowerCase = searchValue.toLowerCase();
             for (let i = 0; i < this.courses.length; i++) {
-                if (searchStrings[i].includes(termLowerCase)) {
-                    searchBody.push({
+                const searchString = searchStrings[i];
+                if (searchString.includes(termLowerCase)) {
+                    const course = {
                         _id: courses[i]._id,
                         course: courses[i]
-                    });
+                    };
+                    if (searchString.indexOf(termLowerCase) === 0) {
+                        courseResults.push(course);
+                    } else {
+                        nameResults.push(course);
+                    }
                 }
             }
         }
-        this.setState({searchBody, searchValue});
+        this.setState({
+            searchBody: courseResults.concat(nameResults),
+            searchValue: searchValue
+        });
     }
 
-    displayString(course) {
-        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
-    }
+    /* 
+        Card Manipulation Methods
+                                    */
 
-    // Card Manipulation Methods
-
+    // Required method for DragDropContext, handles moving cards between columns
     onDragEnd(result) {
         const { destination, source } = result;
         if (!(destination && source)) { return; }
@@ -293,6 +285,7 @@ class PageBody extends Component {
         this.handleCardMove(card, sourceId, destId);
     }
 
+    // Fires API requests when cards are moved to store state in database
     handleCardMove(card, sourceId, destId) {
         if (!this.isSearchBody(sourceId) && this.isSearchBody(destId)) {
             axios.delete(cardsUrl + card._id)
@@ -333,6 +326,7 @@ class PageBody extends Component {
         }
     }
 
+    // Helper function to differentiate the searchBody column
     isSearchBody(id) {
         return id === "searchBody";
     }
