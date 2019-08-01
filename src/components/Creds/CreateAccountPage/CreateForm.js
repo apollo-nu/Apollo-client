@@ -25,6 +25,7 @@ class CreateForm extends Component {
         this.state = initialState;
     }
 
+    // Shows error text to user
     showError(message) {
         this.setState({
             errorText: message,
@@ -32,6 +33,7 @@ class CreateForm extends Component {
         });
     }
 
+    // Callback that fires when create account is pressed
     createAccount() {
         if (this.state.password === this.state.confirmPassword) {
             axios.post(createAccountAPI, {

@@ -14,6 +14,7 @@ class MainPage extends Component {
     this.state = {id: ""};
   }
 
+  // Pings the server and redirects to login if the jwt cookie is invalid
   componentWillMount() {
     axios.get(pingAPI)
       .then(response => {

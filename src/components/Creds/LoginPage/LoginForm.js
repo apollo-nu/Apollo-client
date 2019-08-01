@@ -25,6 +25,7 @@ class LoginForm extends Component {
         this.state = initialState;
     }
 
+    // Shows error text to user
     showError(message) {
         this.setState({
             errorText: message,
@@ -32,6 +33,7 @@ class LoginForm extends Component {
         });
     }
 
+    // Callback that fires when login is pressed
     login() {
         axios.post(loginAPI, {
             email: this.state.email,

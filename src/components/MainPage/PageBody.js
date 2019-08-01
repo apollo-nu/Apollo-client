@@ -41,8 +41,7 @@ class PageBody extends Component {
         this.getCourses();
     }
 
-    // Board-handling methods
-
+    // Gets board and decides whether returning or new user flow is used.
     initBoard() {
         axios.get(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
@@ -50,7 +49,7 @@ class PageBody extends Component {
                 if (res.ok) {
                     let board = res.body.board;
                     if (board) {
-                        this.getBoard(board);
+                        this.getColumns(board);
                     } else {
                         this.setState({yearPickerVisible: true});
                     }
@@ -63,16 +62,19 @@ class PageBody extends Component {
             });
     }
 
-    // Returning User Flow
+    /* 
+        Returning User Flow
+                             */
 
-    getBoard(board) {
+    // Finds existing columns for the user's board
+    getColumns(board) {
         const boardId = board._id;
         axios.get(columnsUrl + `board/${boardId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
                     const columns = res.body.columns;
-                    this.getColumns(columns, board);
+                    this.getCards(columns, board);
                 } else {
                     console.log(res.message);
                 }
@@ -82,7 +84,8 @@ class PageBody extends Component {
             });
     }
 
-    getColumns(columns, board) {
+    // Finds existing cards for each column and sets the board state
+    getCards(columns, board) {
         let newBoard = {
             board: board,
             columns: {}
@@ -109,20 +112,27 @@ class PageBody extends Component {
         }
     }
 
-    // New User Flow
+    /* 
+        New User Flow
+                        */
 
+    // Callback that fires on year picker submit
     onYearPickerSubmit(startYear, endYear) {
         this.postBoard(startYear.value, endYear.value);
         this.setState({yearPickerVisible: false});
     }
 
+    // Creates a new board for the user
     postBoard(startYear, endYear) {
         axios.post(boardsUrl + `user/${this.state.userId}`)
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    const termNames = this.getColumnNames(startYear, endYear);
-                    this.addRowOfColumns(res.body.board, termNames);
+                    const columnNames = this.getColumnNames(startYear, endYear);
+                    this.addColumns({
+                        board: res.body.board,
+                        columns: {}
+                    }, columnNames);
                 } else {
                     console.log(res.message);
                 }
@@ -132,28 +142,27 @@ class PageBody extends Component {
             });
     }
 
-    termName(year, seasonIndex) {
+    // Helper function to make column names out of year and season
+    columnName(year, seasonIndex) {
         return `${year} ${seasons[seasonIndex]}`;
     }
 
+    // Generates array of column names to create and POST
     getColumnNames(startYear, endYear) {
-        let names = [this.termName(startYear, 0)];
-        const endName = this.termName(endYear + 1, 3);
+        let names = [this.columnName(startYear, 0)];
+        const endName = this.columnName(endYear + 1, 3);
         while (names[names.length - 1] !== endName) {
             const prevName = names[names.length - 1];
             const prevSeason = prevName.slice(5);
             const nextSeasonIndex = (seasons.indexOf(prevSeason) + 1) % seasons.length;
             const year = parseInt(prevName.slice(0, 4), 10) + (nextSeasonIndex === 1 ? 1 : 0);
-            names.push(this.termName(year, nextSeasonIndex));
+            names.push(this.columnName(year, nextSeasonIndex));
         }
         return names;
     }
 
-    addRowOfColumns(board, termNames) {
-        board = {
-            board: board,
-            columns: {}
-        }
+    // POSTs columns and sets board state
+    addColumns(board, termNames) {
         let columnsAdded = 0;
         const callback = columnRes => {
             columnRes = columnRes.data;
@@ -179,8 +188,11 @@ class PageBody extends Component {
         }
     }
 
-    // Course-handling and Search methods
+    /* 
+        Course-handling and Search methods
+                                            */
 
+    // Returns list of all courses
     getCourses() {
         axios.get(coursesUrl)
             .then(res => {
@@ -198,6 +210,12 @@ class PageBody extends Component {
             });
     }
 
+    // Helper function to generate search strings of cards
+    displayString(course) {
+        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
+    }
+
+    // Filtering function, returns courses that match text field
     onSearchChange(e) {
         const searchValue = e.target.value;
         let searchBody = [];
@@ -217,12 +235,11 @@ class PageBody extends Component {
         this.setState({searchBody, searchValue});
     }
 
-    displayString(course) {
-        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
-    }
+    /* 
+        Card Manipulation Methods
+                                    */
 
-    // Card Manipulation Methods
-
+    // Required method for DragDropContext, handles moving cards between columns
     onDragEnd(result) {
         const { destination, source } = result;
         if (!(destination && source)) { return; }
@@ -258,6 +275,7 @@ class PageBody extends Component {
         this.handleCardMove(card, sourceId, destId);
     }
 
+    // Fires API requests when cards are moved to store state in database
     handleCardMove(card, sourceId, destId) {
         if (!this.isSearchBody(sourceId) && this.isSearchBody(destId)) {
             axios.delete(cardsUrl + card._id)
@@ -298,6 +316,7 @@ class PageBody extends Component {
         }
     }
 
+    // Helper function to differentiate the searchBody column
     isSearchBody(id) {
         return id === "searchBody";
     }
