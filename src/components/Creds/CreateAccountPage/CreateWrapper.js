@@ -8,7 +8,7 @@ class CreateWrapper extends Component {
         return (
             <div className="CreateWrapper">
                 <div className="AuthHeaderText">
-                    Create Account:
+                    Create an Account
                 </div>
                 <CreateForm history={this.props.history}/>
             </div>
