@@ -103,8 +103,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 450px;
-    height: 300px;
     margin-top: 25px;
     margin-bottom: 25px;
     border-radius: 15px;
@@ -116,8 +114,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 450px;
-    height: 400px;
     margin-top: 20px;
     margin-bottom: 20px;
     border-radius: 15px;
@@ -127,24 +123,40 @@ body {
 .AuthHeaderText {
     color: #7550ab;
     font-size: 22pt;
-    margin-top: 6px;
+    margin-top: 30px;
     margin-bottom: 28px;
     font-family: "Montserrat";
 }
 
-.AuthForm {
+.LoginForm {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 75%;
-    height: 50%;
+    width: 350px;
+    height: 175px;
     margin-top: 6px;
+    margin-bottom: 20px;
+    margin-right: 32px;
+    margin-left: 32px;
+}
+
+.CreateForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 350px;
+    height: 225px;
+    margin-top: 6px;
+    margin-bottom: 20px;
+    margin-right: 32px;
+    margin-left: 32px;
 }
 
 .AuthTextField {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     font-size: 18px;
     border-radius: 5px;
     font-family: "Montserrat";

@@ -77,7 +77,7 @@ class CreateForm extends Component {
 
     render() {
         return (
-            <div className="AuthForm">
+            <div className="CreateForm">
                 <Email name="email"
                         placeholder="Email Address"
                         onChange={e => {
