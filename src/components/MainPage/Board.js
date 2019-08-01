@@ -18,9 +18,8 @@ class Board extends Component {
                   bName = columns[b].column.name;
             if (aName.slice(0, 4) === bName.slice(0, 4)) {
                 return seasonMap[aName.slice(5)] > seasonMap[bName.slice(5)]? 1:-1;
-            } else {
-                return aName > bName? 1:-1;
             }
+            return aName > bName? 1:-1;
         });
         return (
             <div className="BoardWrapper">

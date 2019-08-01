@@ -175,7 +175,7 @@ class PageBody extends Component {
             const prevItem = terms[terms.length - 1];
             const prevSeason = prevItem.name.slice(5);
             const nextSeasonIndex = (seasons.indexOf(prevSeason) + 1) % seasons.length;
-            const year = parseInt(prevItem.name.slice(0, 4)) + (nextSeasonIndex === 1 ? 1 : 0);
+            const year = parseInt(prevItem.name.slice(0, 4), 10) + (nextSeasonIndex === 1 ? 1 : 0);
             terms.push({
                 id: prevItem.id + 10,
                 name: this.termName(year, nextSeasonIndex)
