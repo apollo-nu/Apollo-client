@@ -73,9 +73,9 @@ class LoginForm extends Component {
                                 });
                             }}
                             value={this.state.password}/>
+                {this.state.errorVisible? <ErrorText value={this.state.errorText}/> : null}
                 <Submit value="Log In"
                         onClick={this.login.bind(this)}/>
-                {this.state.errorVisible? <ErrorText value={this.state.errorText}/> : null}
             </div>
         )
     }

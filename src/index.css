@@ -124,38 +124,43 @@ body {
     background-color: white;
 }
 
+.AuthHeaderText {
+    color: #7550ab;
+    font-size: 22pt;
+    margin-top: 6px;
+    margin-bottom: 28px;
+    font-family: "Montserrat";
+}
+
 .AuthForm {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     width: 75%;
-    height: 60%;
-}
-
-.AuthHeaderText {
-    color: #7550ab;
-    font-size: 18pt;
-    margin-bottom: 25px;
+    height: 50%;
+    margin-top: 6px;
 }
 
 .AuthTextField {
     width: 100%;
     padding: 8px;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 5px;
+    font-family: "Montserrat";
 }
 
 .SubmitButton {
     width: 100%;
     padding: 8px;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 5px;
     color: white;
     background-color: #7550ab;
     cursor: pointer;
     cursor: -moz-pointer;
     cursor: -webkit-pointer;
+    font-family: "Montserrat";
 }
 
 .NavText {
@@ -164,6 +169,7 @@ body {
     cursor: pointer;
     cursor: -moz-pointer;
     cursor: -webkit-pointer;
+    font-family: "Montserrat";
 }
 
 .ErrorText {

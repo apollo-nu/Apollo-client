@@ -105,7 +105,7 @@ class CreateForm extends Component {
                                 });
                             }}
                             value={this.state.confirmPassword}/>
-                {this.state.errorVisible? <ErrorText value={this.state.errorText}/>:null}
+                {this.state.errorVisible? <ErrorText value={this.state.errorText}/> : null}
                 <Submit value="Submit"
                         onClick={this.createAccount.bind(this)}/>
             </div>
