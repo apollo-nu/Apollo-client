@@ -87,7 +87,7 @@ body {
 }
 
 /* Creds */
-.LoginPage {
+.AuthPage {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -111,7 +111,20 @@ body {
     background-color: white;
 }
 
-.LoginForm {
+.CreateWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 450px;
+    height: 400px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.AuthForm {
     display: flex;
     flex-direction: column;
     align-items: center;

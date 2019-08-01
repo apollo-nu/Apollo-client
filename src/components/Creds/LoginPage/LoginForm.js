@@ -54,7 +54,7 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <div className="LoginForm">
+            <div className="AuthForm">
                 <Email name="email"
                         placeholder="Email Address"
                         onChange={e => {
