@@ -11,7 +11,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div className="LoginPage">
+      <div className="AuthPage">
         <LoginWrapper history={this.props.history}/>
         <input type="button"
                value="New User? Sign Up"

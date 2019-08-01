@@ -59,6 +59,7 @@ class CreateForm extends Component {
         } 
     }
 
+    // Logs user in if account was created successfully, otherwise bounces to login page
     login(creds) {
         axios.post(loginAPI, creds)
             .then(response => {
@@ -76,46 +77,34 @@ class CreateForm extends Component {
 
     render() {
         return (
-            <div>
-                <label>
-                    Email:
-                    <Email name="email"
-                           placeholder="Email Address"
-                           onChange={e => {
+            <div className="AuthForm">
+                <Email name="email"
+                        placeholder="Email Address"
+                        onChange={e => {
+                            this.setState({
+                                errorVisible: false,
+                                email: e.target.value
+                            });
+                        }}
+                        value={this.state.email}/>
+                <Password name="password"
+                            placeholder="Password"
+                            onChange={e => {
                                 this.setState({
-                                   errorVisible: false,
-                                   email: e.target.value
+                                    errorVisible: false,
+                                    password: e.target.value
                                 });
-                           }}
-                           value={this.state.email}/>
-                </label>
-                <br/>
-                <label>
-                    Password:
-                    <Password name="password"
-                              placeholder="Password"
-                              onChange={e => {
-                                    this.setState({
-                                        errorVisible: false,
-                                        password: e.target.value
-                                    });
-                              }}
-                              value={this.state.password}/>
-                </label>
-                <br/>
-                <label>
-                    Confirm Password:
-                    <Password name="confirmPassword"
-                              placeholder="Confirm Password"
-                              onChange={e => {
-                                    this.setState({
-                                        errorVisible: false,
-                                        confirmPassword: e.target.value
-                                    });
-                              }}
-                              value={this.state.confirmPassword}/>
-                </label>
-                <br/>
+                            }}
+                            value={this.state.password}/>
+                <Password name="confirmPassword"
+                            placeholder="Confirm Password"
+                            onChange={e => {
+                                this.setState({
+                                    errorVisible: false,
+                                    confirmPassword: e.target.value
+                                });
+                            }}
+                            value={this.state.confirmPassword}/>
                 {this.state.errorVisible? <ErrorText value={this.state.errorText}/>:null}
                 <Submit value="Submit"
                         onClick={this.createAccount.bind(this)}/>
