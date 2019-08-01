@@ -25,7 +25,8 @@ class Board extends Component {
     }
 
     render() {
-        const keys = this.sortColumns(this.props.columns);
+        const columns = this.props.columns;
+        const keys = this.sortColumns(columns);
         return (
             <div className="BoardWrapper">
                 <div className="Board">
