@@ -4,22 +4,22 @@ import CreateForm from "./CreateForm";
 
 // UI wrapper for the input form
 class CreateWrapper extends Component {
-  render() {
-    return (
-        <div className="CreateWrapper">
-            <div className="AuthHeaderText">
-                Create Account:
+    render() {
+        return (
+            <div className="CreateWrapper">
+                <div className="AuthHeaderText">
+                    Create Account:
+                </div>
+                <CreateForm history={this.props.history}/>
             </div>
-            <CreateForm history={this.props.history}/>
-        </div>
-    );
-  }
+        );
+    }
 }
 
 CreateWrapper.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  })
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    })
 };
 
 export default CreateWrapper;
