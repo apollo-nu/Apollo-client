@@ -9,6 +9,7 @@ import Submit from "../Submit";
 import axios from "axios";
 import API from "../../../config/api";
 const createAccountAPI = `${API.users}/createAccount`;
+const loginAPI = `${API.users}/login`;
 
 const initialState = {
     email: "",
@@ -35,15 +36,16 @@ class CreateForm extends Component {
 
     // Callback that fires when create account is pressed
     createAccount() {
+        const creds = {
+            email: this.state.email,
+            password: this.state.password
+        }
         if (this.state.password === this.state.confirmPassword) {
-            axios.post(createAccountAPI, {
-                email: this.state.email,
-                password: this.state.password
-            })
+            axios.post(createAccountAPI, creds)
                 .then(response => {
                     response = response.data;
                     if (response.ok) {
-                        this.props.history.push("/login/");
+                        this.login(creds);
                     } else {
                         this.showError(response.message);
                     }
@@ -55,6 +57,21 @@ class CreateForm extends Component {
         } else {
             this.showError("Passwords must be equal");
         } 
+    }
+
+    login(creds) {
+        axios.post(loginAPI, creds)
+            .then(response => {
+                response = response.data;
+                if (response.ok) {
+                    this.props.history.push("/main/");
+                } else {
+                    this.props.history.push("/login/");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     render() {
