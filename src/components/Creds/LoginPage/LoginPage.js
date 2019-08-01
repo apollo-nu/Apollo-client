@@ -4,9 +4,19 @@ import LoginWrapper from "./LoginWrapper";
 
 // Wrapper for the entire Login Page
 class LoginPage extends Component {
+  //Callback that redirects to createAccount page
+  moveToCreate() {
+    this.props.history.push("/createAccount/");
+  }
+
   render() {
     return (
-      <LoginWrapper history={this.props.history}/>
+      <div className="LoginPage">
+        <LoginWrapper history={this.props.history}/>
+        <input type="button"
+               value="Create Account"
+               onClick={this.moveToCreate.bind(this)}/>
+      </div>
     );
   }
 }

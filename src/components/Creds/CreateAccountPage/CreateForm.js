@@ -63,6 +63,7 @@ class CreateForm extends Component {
                 <label>
                     Email:
                     <Email name="email"
+                           placeholder="Email Address"
                            onChange={e => {
                                 this.setState({
                                    errorVisible: false,
@@ -75,6 +76,7 @@ class CreateForm extends Component {
                 <label>
                     Password:
                     <Password name="password"
+                              placeholder="Password"
                               onChange={e => {
                                     this.setState({
                                         errorVisible: false,
@@ -87,6 +89,7 @@ class CreateForm extends Component {
                 <label>
                     Confirm Password:
                     <Password name="confirmPassword"
+                              placeholder="Confirm Password"
                               onChange={e => {
                                     this.setState({
                                         errorVisible: false,
