@@ -27,7 +27,7 @@
         "array-bracket-newline": "error",
         "array-bracket-spacing": "error",
         "array-callback-return": "error",
-        "array-element-newline": "error",
+        "array-element-newline": "off",
         "arrow-body-style": "off",
         "arrow-parens": [
             "error",
@@ -122,7 +122,7 @@
         "max-classes-per-file": "error",
         "max-depth": "error",
         "max-len": "off",
-        "max-lines": "error",
+        "max-lines": "off",
         "max-lines-per-function": "error",
         "max-nested-callbacks": "error",
         "max-params": "error",
@@ -164,7 +164,7 @@
         "no-labels": "error",
         "no-lone-blocks": "error",
         "no-lonely-if": "error",
-        "no-loop-func": "error",
+        "no-loop-func": "off",
         "no-magic-numbers": "off",
         "no-mixed-operators": "error",
         "no-mixed-requires": "error",
@@ -257,7 +257,7 @@
             "last"
         ],
         "sort-keys": "off",
-        "sort-vars": "error",
+        "sort-vars": "off",
         "space-before-blocks": "error",
         "space-before-function-paren": "off",
         "space-in-parens": [
