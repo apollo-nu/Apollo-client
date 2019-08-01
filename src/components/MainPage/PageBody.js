@@ -10,7 +10,6 @@ import API from "../../config/api";
 axios.defaults.withCredentials = true;
 
 const coursesUrl = `${API.courses}/`;
-const termsUrl = `${API.terms}/`;
 const boardsUrl = `${API.boards}/`;
 const columnsUrl = `${API.columns}/`;
 const cardsUrl = `${API.cards}/`;
@@ -24,6 +23,7 @@ const initialData = {
     searchValue: "",
     yearPickerVisible: false
 };
+const seasons = ["Fall", "Winter", "Spring", "Summer"];
 
 class PageBody extends Component {
     constructor(props) {
@@ -121,23 +121,8 @@ class PageBody extends Component {
             .then(res => {
                 res = res.data;
                 if (res.ok) {
-                    this.getTerms(res.body.board, startYear, endYear);
-                } else {
-                    console.log(res.message);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-
-    getTerms(board, startYear, endYear) {
-        axios.get(termsUrl)
-            .then(res => {
-                res = res.data;
-                if (res.ok) {
-                    const termNames = this.modifyTerms(res.body.terms, startYear, endYear);
-                    this.addRowOfColumns(board, termNames);
+                    const termNames = this.getColumnNames(startYear, endYear);
+                    this.addRowOfColumns(res.body.board, termNames);
                 } else {
                     console.log(res.message);
                 }
@@ -148,40 +133,20 @@ class PageBody extends Component {
     }
 
     termName(year, seasonIndex) {
-        const seasons = ["Fall", "Winter", "Spring", "Summer"];
         return `${year} ${seasons[seasonIndex]}`;
     }
 
-    modifyTerms(terms, startYear, endYear) {
-        terms = terms.sort((a, b) => a.id - b.id);
-        const termNames = terms.map(term => term.name);
-
-        const startName = this.termName(startYear, 0),
-              endName = this.termName(endYear + 1, 3);
-        const startIndex = termNames.indexOf(startName),
-              endIndex = termNames.indexOf(endName);
-        
-        if (startIndex === -1) {
-            terms = [];
-            terms.push({id: 0, name: startName});
-        } else if (endIndex === -1) {
-            terms = terms.slice(startIndex);
-        } else {
-            terms = terms.slice(startIndex, endIndex + 1);
-        }
-
-        const seasons = ["Fall", "Winter", "Spring", "Summer"];
-        while (terms[terms.length - 1].name !== endName) {
-            const prevItem = terms[terms.length - 1];
-            const prevSeason = prevItem.name.slice(5);
+    getColumnNames(startYear, endYear) {
+        let names = [this.termName(startYear, 0)];
+        const endName = this.termName(endYear + 1, 3);
+        while (names[names.length - 1] !== endName) {
+            const prevName = names[names.length - 1];
+            const prevSeason = prevName.slice(5);
             const nextSeasonIndex = (seasons.indexOf(prevSeason) + 1) % seasons.length;
-            const year = parseInt(prevItem.name.slice(0, 4), 10) + (nextSeasonIndex === 1 ? 1 : 0);
-            terms.push({
-                id: prevItem.id + 10,
-                name: this.termName(year, nextSeasonIndex)
-            });
+            const year = parseInt(prevName.slice(0, 4), 10) + (nextSeasonIndex === 1 ? 1 : 0);
+            names.push(this.termName(year, nextSeasonIndex));
         }
-        return terms.map(term => term.name);
+        return names;
     }
 
     addRowOfColumns(board, termNames) {
