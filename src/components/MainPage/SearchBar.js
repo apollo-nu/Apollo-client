@@ -4,12 +4,11 @@ import PropTypes from "prop-types";
 class SearchBar extends Component {
     render() {
         return (
-            <div>
-                Search:
-                <input type="search"
-                       onChange={this.props.onChange}
-                       value={this.props.value}/>
-            </div>
+            <input type="search"
+                   placeholder="Search Courses"
+                   className="SearchBar"
+                   onChange={this.props.onChange}
+                   value={this.props.value}/>
         )
     }
 }

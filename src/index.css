@@ -85,6 +85,28 @@ input:-webkit-autofill:active  {
     -ms-user-select: none;
 }
 
+.Sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    width: 20%;
+}
+
+.SearchBar {
+    width: 100%;
+    font-size: 22px;
+    padding: 12px;
+    border: none;
+    border-bottom: 1px solid black;
+    background-color: white;
+    font-family: "Montserrat";
+}
+
+.SearchBody {
+    height: 100%;
+}
+
 .YearPicker {
     z-index: 2;
     position: fixed;
@@ -99,19 +121,6 @@ input:-webkit-autofill:active  {
     display: flex;
     flex-direction: row;
     align-items: center;
-}
-
-.Sidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 5px;
-    border: 1px solid black;
-    width: 20%;
-}
-
-.SearchBody {
-    height: 100%;
 }
 
 /* Creds */
