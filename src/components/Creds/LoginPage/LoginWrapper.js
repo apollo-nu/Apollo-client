@@ -6,7 +6,7 @@ import LoginForm from "./LoginForm";
 class LoginWrapper extends Component {
   render() {
     return (
-        <div className="LoginWrapper">
+        <div className="AuthWrapper">
           <div className="AuthHeaderText">
             Log in to Apollo
           </div>

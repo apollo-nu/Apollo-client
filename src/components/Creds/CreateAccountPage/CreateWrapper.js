@@ -6,7 +6,7 @@ import CreateForm from "./CreateForm";
 class CreateWrapper extends Component {
     render() {
         return (
-            <div className="CreateWrapper">
+            <div className="AuthWrapper">
                 <div className="AuthHeaderText">
                     Create an Account
                 </div>
