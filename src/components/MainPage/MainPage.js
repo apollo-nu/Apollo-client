@@ -33,7 +33,7 @@ class MainPage extends Component {
 
   render() {
     return (this.state.id?
-          (<div>
+          (<div className="MainPage">
             <PageHeader/>
             <PageBody id={this.state.id}/>
           </div>
