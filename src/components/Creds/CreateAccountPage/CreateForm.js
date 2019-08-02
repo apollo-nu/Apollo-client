@@ -19,7 +19,7 @@ const initialState = {
     errorVisible: false
 };
 
-const errorMap = (email) => {
+const errorMap = email => {
     let map = {
         "email is required": "Missing Field(s).",
         "password is required": "Missing Field(s).",
