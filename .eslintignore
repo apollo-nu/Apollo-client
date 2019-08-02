@@ -13,3 +13,4 @@ package-lock.json
 /public/*
 /node_modules/*
 /src/index.css
+/src/img/*
