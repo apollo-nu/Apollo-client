@@ -14,21 +14,16 @@ class Column extends Component {
         return (
             <Droppable droppableId={this.props.id}>
                 {provided => (
-                    <div className="ColumnWrapper">
-                        <div className="ColumnTitle">
-                            {this.props.name || ""}
-                        </div>
-                        <div className={this.props.className}
-                            style={this.props.style}
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            {...provided.droppablePlaceholder}>
-                            {this.props.items.slice(0, MAX_CARDS).map(block => <Card key={block._id}
-                                                                                    draggableId={block._id}
-                                                                                    index={this.props.items.indexOf(block)}
-                                                                                    title={this.displayString(block.course)}/>)}
-                            {provided.placeholder}
-                        </div>
+                    <div className={this.props.className}
+                        style={this.props.style}
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        {...provided.droppablePlaceholder}>
+                        {this.props.items.slice(0, MAX_CARDS).map(block => <Card key={block._id}
+                                                                                draggableId={block._id}
+                                                                                index={this.props.items.indexOf(block)}
+                                                                                title={this.displayString(block.course)}/>)}
+                        {provided.placeholder}
                     </div>
                 )}
             </Droppable>

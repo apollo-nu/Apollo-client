@@ -29,15 +29,21 @@ class Board extends Component {
         const keys = this.sortColumns(columns);
         return (
             <div className="Board">
-                {keys.map((key, i) => <Column key={i}
-                                              id={key}
-                                              items={columns[key].cards}
-                                              name={columns[key].column.name}
-                                              className="Column"
-                                              style={{
-                                                  gridColumnStart: (keys.indexOf(key) % COLUMN_COUNT) + 1,
-                                                  gridRowStart: Math.floor(keys.indexOf(key) / COLUMN_COUNT) + 1
-                                              }}/>)}
+                {keys.map((key, i) => 
+                    (<div className="ColumnWrapper"
+                          key={i}>
+                        <div className="ColumnTitle">
+                            {columns[key].column.name || ""}
+                        </div>
+                        <Column id={key}
+                                items={columns[key].cards}
+                                className="Column"
+                                style={{
+                                    gridColumnStart: (keys.indexOf(key) % COLUMN_COUNT) + 1,
+                                    gridRowStart: Math.floor(keys.indexOf(key) / COLUMN_COUNT) + 1
+                                }}/>
+                    </div>)
+                )}
             </div>
         );
     }
