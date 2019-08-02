@@ -104,6 +104,13 @@ input:-webkit-autofill:active  {
     background-color: #7550AB;
 }
 
+.LoginLogo {
+    height: 300px;
+    width: 300px;
+    margin-bottom: 40px;
+    margin-top: -200px;
+}
+
 .AuthWrapper {
     margin-top: -25px;
     margin-bottom: 20px;
