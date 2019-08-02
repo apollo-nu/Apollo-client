@@ -14,7 +14,7 @@ class CreateAccountPage extends Component {
                 <CreateWrapper history={this.props.history}/>
                 <div className="NavText"
                      onClick={this.moveToLogin.bind(this)}>
-                    Already have an account? Login
+                    Already have an account? Log In
                 </div>
             </div>
       );
