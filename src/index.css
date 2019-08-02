@@ -25,6 +25,15 @@ input:-webkit-autofill:active  {
 .PageHeader {
     width: 100%;
     height: 10%;
+    background-color: #7550AB;
+}
+
+.HeaderLogo {
+    height: 100%;
+}
+
+.HeaderName {
+    height: 100%;
 }
 
 .PageBody {
