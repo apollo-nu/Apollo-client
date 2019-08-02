@@ -8,6 +8,14 @@ body {
     padding: 0;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    box-shadow: 0 0 0 30px white inset !important;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
 /* MainPage */
 .PageBody {
     display: flex;
@@ -112,17 +120,7 @@ body {
     font-family: "Montserrat";
 }
 
-.LoginForm {
-    width: 350px;
-    height: 100%;
-    margin-top: 6px;
-    margin-bottom: 20px;
-    margin-right: 32px;
-    margin-left: 32px;
-    text-align: center;
-}
-
-.CreateForm {
+.AuthForm {
     width: 350px;
     height: 100%;
     margin-top: 6px;
@@ -140,6 +138,7 @@ body {
     margin-bottom: 8px;
     font-size: 16px;
     border-radius: 5px;
+    background-color: white;
     font-family: "Montserrat";
 }
 
@@ -168,5 +167,7 @@ body {
 
 .ErrorText {
     color: red;
+    text-transform: initial;
     font-family: "Montserrat";
+    margin: 3px;
 }

@@ -18,6 +18,18 @@ const initialState = {
     errorVisible: false
 };
 
+const errorMap = (email) => {
+    let map = {
+        "email is required": "Missing Field(s).",
+        "password is required": "Missing Field(s)",
+        "Please enter a valid email address": "Invalid Email.",
+        "Password is too short": "Invalid Credentials.",
+        "Failed to validate user.": "Invalid Credentials."
+    }
+    map[`No user with email ${email} found.`] = "Invalid Credentials.";
+    return map;
+};
+
 // Form to enter user credentials
 class LoginForm extends Component {
     constructor(props) {
@@ -28,7 +40,7 @@ class LoginForm extends Component {
     // Shows error text to user
     showError(message) {
         this.setState({
-            errorText: message,
+            errorText: errorMap(this.state.email)[message] || message,
             errorVisible: true
         });
     }
@@ -47,14 +59,14 @@ class LoginForm extends Component {
                     this.showError(response.message);
                 }
             })
-            .catch(err => {
-                console.log(err);
+            .catch(() => {
+                this.showError("Something went wrong. Try again?");
             });
     }
 
     render() {
         return (
-            <div className="LoginForm">
+            <div className="AuthForm">
                 <Email name="email"
                         placeholder="Email Address"
                         onChange={e => {
