@@ -45,6 +45,12 @@ class LoginForm extends Component {
         });
     }
 
+    onKeyDown(e) {
+        if (e.key === "Enter") {
+            this.login();
+        }
+    }
+
     // Callback that fires when login is pressed
     login() {
         axios.post(loginAPI, {
@@ -66,7 +72,8 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <div className="AuthForm">
+            <div className="AuthForm"
+                 onKeyDown={e => this.onKeyDown(e)}>
                 <Email name="email"
                         placeholder="Email Address"
                         onChange={e => {
