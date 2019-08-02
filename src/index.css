@@ -1,5 +1,6 @@
 html {
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
 }
 
 body {
@@ -16,10 +17,16 @@ input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
 /* MainPage */
 .MainPage {
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
 }
 
 .PageHeader {
@@ -46,43 +53,44 @@ input:-webkit-autofill:active  {
 
 .Board {
     display: grid;
-    justify-content: space-evenly;
+    justify-content: stretch;
     align-content: flex-start;
     grid-template-columns: auto auto auto auto;
     grid-row-gap: 10px;
-    grid-column-gap: 5px;
+    grid-column-gap: 0px;
     padding: 10px;
     width: 80%;
     height: 100%;
     overflow: auto;
-    border: 1px solid black;
-}
-
-.ColumnWrapper {
-    border: 1px solid black;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .ColumnTitle {
-    margin-left: 10px;
+    padding-left: 5px;
+    font-family: "Montserrat";
+    font-size: 22px;
 }
 
 .Column {
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
     overflow-y: auto;
     height: 500px;
-    width: 275px;
-    margin: 10px;
     border: 1px solid black;
 }
 
 .Card {
     margin: 10px;
     padding: 5px;
+    word-wrap: break-word;
     cursor: move;
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
+    font-family: "Montserrat";
+    font-size: 22px;
     border: 1px solid black;
 }
 
@@ -103,6 +111,8 @@ input:-webkit-autofill:active  {
     flex-direction: column;
     align-items: center;
     width: 20%;
+    height: 100%;
+    border-left: 1px solid black;
 }
 
 .SearchBar {
@@ -117,6 +127,9 @@ input:-webkit-autofill:active  {
 
 .SearchBody {
     height: 100%;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .YearPicker {
