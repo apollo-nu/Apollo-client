@@ -5,8 +5,10 @@ import PropTypes from "prop-types";
 class Email extends Component {
     render() {
         return (
-            <input type="email" 
+            <input type="email"
+                   className="AuthTextField"
                    name={this.props.name}
+                   placeholder={this.props.placeholder}
                    onChange={this.props.onChange}
                    value={this.props.value}/>
         )
@@ -15,6 +17,7 @@ class Email extends Component {
 
 Email.propTypes = {
     name: PropTypes.string,
+    placeholder: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.string
 };

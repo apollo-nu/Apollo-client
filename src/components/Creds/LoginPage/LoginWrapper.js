@@ -4,19 +4,13 @@ import LoginForm from "./LoginForm";
 
 // UI wrapper for the input form
 class LoginWrapper extends Component {
-  // Callback that redirects to the createAccount page
-  moveToCreate() {
-    this.props.history.push("/createAccount/");
-  }
-
   render() {
     return (
-        <div>
-          Log In:
+        <div className="AuthWrapper">
+          <div className="AuthHeaderText">
+            Log in to Apollo
+          </div>
           <LoginForm history={this.props.history}/>
-          <input type="button"
-                 value="Create Account"
-                 onClick={this.moveToCreate.bind(this)}/>
         </div>
     );
   }

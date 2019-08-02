@@ -18,6 +18,18 @@ const initialState = {
     errorVisible: false
 };
 
+const errorMap = email => {
+    let map = {
+        "email is required": "Missing Field(s).",
+        "password is required": "Missing Field(s)",
+        "Please enter a valid email address": "Invalid Email.",
+        "Password is too short": "Invalid Credentials.",
+        "Failed to validate user.": "Invalid Credentials."
+    }
+    map[`No user with email ${email} found.`] = "Invalid Credentials.";
+    return map;
+};
+
 // Form to enter user credentials
 class LoginForm extends Component {
     constructor(props) {
@@ -28,7 +40,7 @@ class LoginForm extends Component {
     // Shows error text to user
     showError(message) {
         this.setState({
-            errorText: message,
+            errorText: errorMap(this.state.email)[message] || message,
             errorVisible: true
         });
     }
@@ -47,40 +59,34 @@ class LoginForm extends Component {
                     this.showError(response.message);
                 }
             })
-            .catch(err => {
-                console.log(err);
+            .catch(() => {
+                this.showError("Something went wrong. Try again?");
             });
     }
 
     render() {
         return (
-            <div>
-                <label>
-                    Email:
-                    <Email name="email"
-                           onChange={e => {
+            <div className="AuthForm">
+                <Email name="email"
+                        placeholder="Email Address"
+                        onChange={e => {
+                            this.setState({
+                                errorVisible: false,
+                                email: e.target.value
+                            });
+                        }}
+                        value={this.state.email}/>
+                <Password name="password"
+                            placeholder="Password"
+                            onChange={e => {
                                 this.setState({
-                                   errorVisible: false,
-                                   email: e.target.value
+                                    errorVisible: false,
+                                    password: e.target.value
                                 });
-                           }}
-                           value={this.state.email}/>
-                </label>
-                <br/>
-                <label>
-                    Password:
-                    <Password name="password"
-                              onChange={e => {
-                                    this.setState({
-                                        errorVisible: false,
-                                        password: e.target.value
-                                    });
-                              }}
-                              value={this.state.password}/>
-                </label>
-                <br/>
+                            }}
+                            value={this.state.password}/>
                 {this.state.errorVisible? <ErrorText value={this.state.errorText}/> : null}
-                <Submit value="Submit"
+                <Submit value="Log In"
                         onClick={this.login.bind(this)}/>
             </div>
         )

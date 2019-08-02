@@ -9,6 +9,7 @@ import Submit from "../Submit";
 import axios from "axios";
 import API from "../../../config/api";
 const createAccountAPI = `${API.users}/createAccount`;
+const loginAPI = `${API.users}/login`;
 
 const initialState = {
     email: "",
@@ -16,6 +17,19 @@ const initialState = {
     confirmPassword: "",
     errorText: "",
     errorVisible: false
+};
+
+const errorMap = email => {
+    let map = {
+        "email is required": "Missing Field(s).",
+        "password is required": "Missing Field(s).",
+        "Please enter a valid email address": "Invalid Email.",
+        "Password is too short": "Invalid Credentials.",
+        "Failed to validate user.": "Invalid Credentials.",
+        "Passwords must be equal": "Passwords must match."
+    }
+    map[`No user with email ${email} found.`] = "Invalid Credentials.";
+    return map;
 };
 
 // Form to enter user credentials
@@ -28,75 +42,83 @@ class CreateForm extends Component {
     // Shows error text to user
     showError(message) {
         this.setState({
-            errorText: message,
+            errorText: errorMap(this.state.email)[message] || message,
             errorVisible: true
         });
     }
 
     // Callback that fires when create account is pressed
     createAccount() {
+        const creds = {
+            email: this.state.email,
+            password: this.state.password
+        }
         if (this.state.password === this.state.confirmPassword) {
-            axios.post(createAccountAPI, {
-                email: this.state.email,
-                password: this.state.password
-            })
+            axios.post(createAccountAPI, creds)
                 .then(response => {
                     response = response.data;
                     if (response.ok) {
-                        this.props.history.push("/login/");
+                        this.login(creds);
                     } else {
                         this.showError(response.message);
                     }
                 })
                 .catch(err => {
                     console.log(err);
-                    this.showError("Error 404");
+                    this.showError("Something went wrong. Try again?");
                 });
         } else {
             this.showError("Passwords must be equal");
         } 
     }
 
+    // Logs user in if account was created successfully, otherwise bounces to login page
+    login(creds) {
+        axios.post(loginAPI, creds)
+            .then(response => {
+                response = response.data;
+                if (response.ok) {
+                    this.props.history.push("/main/");
+                } else {
+                    this.props.history.push("/login/");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
     render() {
         return (
-            <div>
-                <label>
-                    Email:
-                    <Email name="email"
-                           onChange={e => {
+            <div className="AuthForm">
+                <Email name="email"
+                       placeholder="Email Address"
+                       onChange={e => {
+                          this.setState({
+                            errorVisible: false,
+                            email: e.target.value
+                          });
+                       }}
+                       value={this.state.email}/>
+                <Password name="password"
+                          placeholder="Password"
+                          onChange={e => {
+                            this.setState({
+                                errorVisible: false,
+                                password: e.target.value
+                            });
+                          }}
+                          value={this.state.password}/>
+                <Password name="confirmPassword"
+                            placeholder="Confirm Password"
+                            onChange={e => {
                                 this.setState({
-                                   errorVisible: false,
-                                   email: e.target.value
+                                    errorVisible: false,
+                                    confirmPassword: e.target.value
                                 });
-                           }}
-                           value={this.state.email}/>
-                </label>
-                <br/>
-                <label>
-                    Password:
-                    <Password name="password"
-                              onChange={e => {
-                                    this.setState({
-                                        errorVisible: false,
-                                        password: e.target.value
-                                    });
-                              }}
-                              value={this.state.password}/>
-                </label>
-                <br/>
-                <label>
-                    Confirm Password:
-                    <Password name="confirmPassword"
-                              onChange={e => {
-                                    this.setState({
-                                        errorVisible: false,
-                                        confirmPassword: e.target.value
-                                    });
-                              }}
-                              value={this.state.confirmPassword}/>
-                </label>
-                <br/>
-                {this.state.errorVisible? <ErrorText value={this.state.errorText}/>:null}
+                            }}
+                            value={this.state.confirmPassword}/>
+                {this.state.errorVisible? <ErrorText value={this.state.errorText}/> : null}
                 <Submit value="Submit"
                         onClick={this.createAccount.bind(this)}/>
             </div>

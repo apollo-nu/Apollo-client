@@ -5,8 +5,10 @@ import PropTypes from "prop-types";
 class Password extends Component {
     render() {
         return (
-            <input type="password" 
+            <input type="password"
+                   className="AuthTextField"
                    name={this.props.name}
+                   placeholder={this.props.placeholder}
                    onChange={this.props.onChange}
                    value={this.props.value}/>
         )
@@ -15,6 +17,7 @@ class Password extends Component {
 
 Password.propTypes = {
     name: PropTypes.string,
+    placeholder: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.string
 };
