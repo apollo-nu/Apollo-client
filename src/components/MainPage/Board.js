@@ -29,9 +29,8 @@ class Board extends Component {
         const keys = this.sortColumns(columns);
         return (
             <div className="Board">
-                {keys.map((key, i) => 
-                    (<div className="ColumnWrapper"
-                          key={i}>
+                {keys.map((key, i) => (
+                    <div key={i}>
                         <div className="ColumnTitle">
                             {columns[key].column.name || ""}
                         </div>
@@ -42,8 +41,7 @@ class Board extends Component {
                                     gridColumnStart: (keys.indexOf(key) % COLUMN_COUNT) + 1,
                                     gridRowStart: Math.floor(keys.indexOf(key) / COLUMN_COUNT) + 1
                                 }}/>
-                    </div>)
-                )}
+                    </div>))}
             </div>
         );
     }
