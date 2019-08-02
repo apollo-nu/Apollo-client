@@ -12,6 +12,9 @@ class LoginPage extends Component {
   render() {
     return (
       <div className="AuthPage">
+        <img src={require("../../../img/logo_name.png")}
+             className="LoginLogo"
+             alt="Logo"/>
         <LoginWrapper history={this.props.history}/>
         <div className="NavText"
              onClick={this.moveToCreate.bind(this)}>
