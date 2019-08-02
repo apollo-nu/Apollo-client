@@ -19,6 +19,19 @@ const initialState = {
     errorVisible: false
 };
 
+const errorMap = (email) => {
+    let map = {
+        "email is required": "Missing Field(s).",
+        "password is required": "Missing Field(s).",
+        "Please enter a valid email address": "Invalid Email.",
+        "Password is too short": "Invalid Credentials.",
+        "Failed to validate user.": "Invalid Credentials.",
+        "Passwords must be equal": "Passwords must match."
+    }
+    map[`No user with email ${email} found.`] = "Invalid Credentials.";
+    return map;
+};
+
 // Form to enter user credentials
 class CreateForm extends Component {
     constructor(props) {
@@ -29,7 +42,7 @@ class CreateForm extends Component {
     // Shows error text to user
     showError(message) {
         this.setState({
-            errorText: message,
+            errorText: errorMap(this.state.email)[message] || message,
             errorVisible: true
         });
     }
@@ -52,7 +65,7 @@ class CreateForm extends Component {
                 })
                 .catch(err => {
                     console.log(err);
-                    this.showError("Error 404");
+                    this.showError("Something went wrong. Try again?");
                 });
         } else {
             this.showError("Passwords must be equal");
@@ -77,25 +90,25 @@ class CreateForm extends Component {
 
     render() {
         return (
-            <div className="CreateForm">
+            <div className="AuthForm">
                 <Email name="email"
-                        placeholder="Email Address"
-                        onChange={e => {
+                       placeholder="Email Address"
+                       onChange={e => {
+                          this.setState({
+                            errorVisible: false,
+                            email: e.target.value
+                          });
+                       }}
+                       value={this.state.email}/>
+                <Password name="password"
+                          placeholder="Password"
+                          onChange={e => {
                             this.setState({
                                 errorVisible: false,
-                                email: e.target.value
+                                password: e.target.value
                             });
-                        }}
-                        value={this.state.email}/>
-                <Password name="password"
-                            placeholder="Password"
-                            onChange={e => {
-                                this.setState({
-                                    errorVisible: false,
-                                    password: e.target.value
-                                });
-                            }}
-                            value={this.state.password}/>
+                          }}
+                          value={this.state.password}/>
                 <Password name="confirmPassword"
                             placeholder="Confirm Password"
                             onChange={e => {
