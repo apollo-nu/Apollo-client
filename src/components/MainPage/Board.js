@@ -9,7 +9,6 @@ const seasonMap = {
     "Summer": 3,
     "Fall": 4
 }
-const COLUMN_COUNT = 4;
 
 class Board extends Component {
     // Sorts columns in correct date order based on name
@@ -28,17 +27,16 @@ class Board extends Component {
         const columns = this.props.columns;
         const keys = this.sortColumns(columns);
         return (
-            <div className="BoardWrapper">
-                <div className="Board">
-                    {keys.map((key, i) => <Column key={i}
-                                                  id={key}
-                                                  items={columns[key].cards}
-                                                  name={columns[key].column.name}
-                                                  style={{
-                                                      gridColumnStart: (keys.indexOf(key) % COLUMN_COUNT) + 1,
-                                                      gridRowStart: Math.floor(keys.indexOf(key) / COLUMN_COUNT) + 1
-                                                  }}/>)}
-                </div>
+            <div className="Board">
+                {keys.map((key, i) => (
+                    <div key={i}>
+                        <div className="ColumnTitle">
+                            {columns[key].column.name || ""}
+                        </div>
+                        <Column id={key}
+                                items={columns[key].cards}
+                                className="Column"/>
+                    </div>))}
             </div>
         );
     }

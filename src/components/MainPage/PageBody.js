@@ -201,6 +201,7 @@ class PageBody extends Component {
                     const courses = res.body.courses;
                     this.courses = courses;
                     this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
+                    this.populateSearchBody(this.state.searchValue);
                 } else {
                     console.log(res.message);
                 }
@@ -217,24 +218,31 @@ class PageBody extends Component {
 
     // Filtering function, returns courses that match text field
     onSearchChange(e) {
-        const searchValue = e.target.value;
+        this.populateSearchBody(e.target.value);
+    }
+
+    populateSearchBody(searchValue) {
         let courseResults = [],
             nameResults = [];
         if (searchValue) {
             const courses = this.courses,
                   searchStrings = this.searchStrings,
                   termLowerCase = searchValue.toLowerCase();
+            let courseSet = new Set();
             for (let i = 0; i < this.courses.length; i++) {
-                const searchString = searchStrings[i];
-                if (searchString.includes(termLowerCase)) {
-                    const course = {
-                        _id: courses[i]._id,
-                        course: courses[i]
-                    };
-                    if (searchString.indexOf(termLowerCase) === 0) {
-                        courseResults.push(course);
-                    } else {
-                        nameResults.push(course);
+                if (!courseSet.has(courses[i].title)) {
+                    courseSet.add(courses[i].title);
+                    const searchString = searchStrings[i];
+                    if (searchString.includes(termLowerCase)) {
+                        const course = {
+                            _id: courses[i]._id,
+                            course: courses[i]
+                        };
+                        if (searchString.indexOf(termLowerCase) === 0) {
+                            courseResults.push(course);
+                        } else {
+                            nameResults.push(course);
+                        }
                     }
                 }
             }
@@ -339,8 +347,8 @@ class PageBody extends Component {
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         <Board columns={this.state.board.columns}/>
                         <Sidebar value={this.state.searchValue}
-                                column={this.state.searchBody}
-                                onChange={e => this.onSearchChange(e)}/>
+                                 column={this.state.searchBody}
+                                 onChange={e => this.onSearchChange(e)}/>
                     </DragDropContext>}
             </div>
         )

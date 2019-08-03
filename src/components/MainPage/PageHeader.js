@@ -4,7 +4,12 @@ class PageHeader extends Component {
     render() {
         return (
             <div className="PageHeader">
-                Header
+                <img src={require("../../img/logo.png")}
+                     className="HeaderLogo"
+                     alt="Logo"/>
+                <img src={require("../../img/name.png")}
+                     className="HeaderName"
+                     alt="Apollo"/>
             </div>
         )
     }
