@@ -7,6 +7,7 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    border: 1px solid black;
 }
 
 input:-webkit-autofill,
@@ -35,7 +36,7 @@ input:-webkit-autofill:active  {
 
 .PageHeader {
     width: 100%;
-    height: 10%;
+    height: 80px;
     background-color: #7550AB;
 }
 
@@ -51,15 +52,14 @@ input:-webkit-autofill:active  {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 90%;
-    border: 1px solid black;
+    height: 100%;
 }
 
 .Board {
     display: grid;
     justify-content: stretch;
     align-content: flex-start;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
     grid-row-gap: 10px;
     grid-column-gap: 0px;
     padding: 10px;
@@ -115,6 +115,7 @@ input:-webkit-autofill:active  {
     flex-direction: column;
     align-items: center;
     width: 20%;
+    min-width: 250px;
     height: 100%;
     border-left: 1px solid black;
 }
