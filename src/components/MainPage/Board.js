@@ -9,7 +9,6 @@ const seasonMap = {
     "Summer": 3,
     "Fall": 4
 }
-const COLUMN_COUNT = 4;
 
 class Board extends Component {
     // Sorts columns in correct date order based on name
@@ -36,11 +35,7 @@ class Board extends Component {
                         </div>
                         <Column id={key}
                                 items={columns[key].cards}
-                                className="Column"
-                                style={{
-                                    gridColumnStart: (keys.indexOf(key) % COLUMN_COUNT) + 1,
-                                    gridRowStart: Math.floor(keys.indexOf(key) / COLUMN_COUNT) + 1
-                                }}/>
+                                className="Column"/>
                     </div>))}
             </div>
         );

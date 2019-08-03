@@ -15,7 +15,6 @@ class Column extends Component {
             <Droppable droppableId={this.props.id}>
                 {provided => (
                     <div className={this.props.className}
-                        style={this.props.style}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         {...provided.droppablePlaceholder}>
