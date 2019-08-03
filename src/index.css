@@ -1,6 +1,7 @@
 html {
     height: 100vh;
     width: 100vw;
+    font-family: "Montserrat";
 }
 
 body {
@@ -28,6 +29,13 @@ input:-webkit-autofill:active  {
     -webkit-appearance: none;
 }
 
+:root {
+    --main-bg-color: #7550AB;
+    --header-height: 80px;
+    --year-picker-height: 150px;
+    --year-picker-width: 400px;
+}
+
 /* MainPage */
 .MainPage {
     width: 100vw;
@@ -37,8 +45,8 @@ input:-webkit-autofill:active  {
 
 .PageHeader {
     width: 100%;
-    height: 80px;
-    background-color: #7550AB;
+    height: var(--header-height);
+    background-color: var(--main-bg-color);
 }
 
 .HeaderLogo {
@@ -53,7 +61,7 @@ input:-webkit-autofill:active  {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - var(--header-height));
 }
 
 .Board {
@@ -73,7 +81,6 @@ input:-webkit-autofill:active  {
 
 .ColumnTitle {
     padding-left: 5px;
-    font-family: "Montserrat";
     font-size: 22px;
 }
 
@@ -93,7 +100,6 @@ input:-webkit-autofill:active  {
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
-    font-family: "Montserrat";
     font-size: 22px;
     border: 1px solid black;
 }
@@ -129,7 +135,6 @@ input:-webkit-autofill:active  {
     outline: none;
     border-bottom: 1px solid black;
     background-color: white;
-    font-family: "Montserrat";
 }
 
 .SearchBody {
@@ -139,20 +144,55 @@ input:-webkit-autofill:active  {
     scrollbar-width: none;
 }
 
+/* YearPicker */
+
 .YearPicker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     z-index: 2;
     position: fixed;
     top: 50%;
     left: 50%;
-    margin-left: -250px;
-    margin-top: -100px;
+    height: var(--year-picker-height);
+    width: var(--year-picker-width);
+    margin-top: calc(var(--year-picker-height) / 2 * -1);
+    margin-left: calc(var(--year-picker-width) / 2 * -1);
+    border-radius: 10px;
     border: 1px solid black;
+}
+
+.YearPickerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25%;
+    width: 100%;
+    background-color: var(--main-bg-color);
+    color: white;
+    font-weight: bold;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .YearDropdownWrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    height: 50%;
+}
+
+.YearSubmitButton {
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+    height: 25%;
+    width: 200px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: var(--main-bg-color);
 }
 
 /* Creds */
@@ -162,7 +202,7 @@ input:-webkit-autofill:active  {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #7550AB;
+    background-color: var(--main-bg-color);
 }
 
 .LoginLogo {
@@ -185,7 +225,6 @@ input:-webkit-autofill:active  {
     margin-top: 30px;
     margin-bottom: 28px;
     text-align: center;
-    font-family: "Montserrat";
 }
 
 .AuthForm {
@@ -204,7 +243,6 @@ input:-webkit-autofill:active  {
     font-size: 16px;
     border-radius: 5px;
     background-color: white;
-    font-family: "Montserrat";
 }
 
 .SubmitButton {
@@ -214,11 +252,10 @@ input:-webkit-autofill:active  {
     border-radius: 8px;
     font-size: 16px;
     color: white;
-    background-color: #7550AB;
+    background-color: var(--main-bg-color);
     cursor: pointer;
     cursor: -moz-pointer;
     cursor: -webkit-pointer;
-    font-family: "Montserrat";
 }
 
 .NavText {
@@ -227,11 +264,112 @@ input:-webkit-autofill:active  {
     cursor: pointer;
     cursor: -moz-pointer;
     cursor: -webkit-pointer;
-    font-family: "Montserrat";
 }
 
 .ErrorText {
     color: red;
-    font-family: "Montserrat";
     margin: 3px;
+}
+
+
+/*
+ * Dropdown styling
+ * https://github.com/fraserxu/react-dropdown/blob/master/style.css
+ */
+
+.Dropdown-root {
+    position: relative;
+}
+
+.Dropdown-control {
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    box-sizing: border-box;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    padding: 8px 52px 8px 10px;
+    margin: 2px;
+    width: 125px;
+    transition: all 200ms ease;
+}
+
+.Dropdown-control:hover {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.Dropdown-arrow {
+    border-color: #999 transparent transparent;
+    border-style: solid;
+    border-width: 5px 5px 0;
+    content: ' ';
+    display: block;
+    height: 0;
+    margin-top: -ceil(2.5);
+    position: absolute;
+    right: 10px;
+    top: 14px;
+    width: 0
+}
+
+.is-open .Dropdown-arrow {
+    border-color: transparent transparent #999;
+    border-width: 0 5px 5px;
+}
+
+.Dropdown-menu {
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+    margin-top: -3px;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    margin-left: 2px;
+    top: 100%;
+    width: 125px;
+    z-index: 1000;
+    -webkit-overflow-scrolling: touch;
+}
+
+.Dropdown-menu .Dropdown-group > .Dropdown-title{
+    padding: 8px 10px;
+    color: rgba(51, 51, 51, 1);
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.Dropdown-option {
+    box-sizing: border-box;
+    color: rgba(51, 51, 51, 0.8);
+    cursor: pointer;
+    display: block;
+    padding: 8px 10px;
+}
+
+.Dropdown-option:last-child {
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.Dropdown-option:hover {
+    background-color: #f2f9fc;
+    color: #333;
+}
+
+.Dropdown-option.is-selected {
+    background-color: #f2f9fc;
+    color: #333;
+}
+
+.Dropdown-noresults {
+    box-sizing: border-box;
+    color: #ccc;
+    cursor: default;
+    display: block;
+    padding: 8px 10px;
 }

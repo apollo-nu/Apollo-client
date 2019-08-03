@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Dropdown from "react-dropdown";
-import "react-dropdown/style.css";
 
 class YearPicker extends Component {
     constructor(props) {
@@ -42,17 +41,20 @@ class YearPicker extends Component {
     render() {
         return (
             <div className="YearPicker">
-                Select Academic Years to Plan:
+                <div className="YearPickerHeader">
+                    Select Academic Years to Plan:
+                </div>
                 <div className="YearDropdownWrapper">
                     <Dropdown options={this.years}
                               value={this.state.startYear}
                               onChange={year => this.setState({startYear: year})}/>
-                    -
+                    <b>-</b>
                     <Dropdown options={this.years}
                               value={this.state.endYear}
                               onChange={year => this.setState({endYear: year})}/>
                 </div>
                 <input type="button"
+                       className="YearSubmitButton"
                        onClick={this.handleSubmit.bind(this)}
                        value="Create Board"/>
             </div>
