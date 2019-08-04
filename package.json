@@ -18,9 +18,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "eslint '**'",
     "testReact": "react-scripts test"
   },
+  "homepage": "https://cooperbarth.com/Apollo-client/",
   "eslintConfig": {
     "extends": "react-app"
   },
