@@ -24,6 +24,7 @@ const initialData = {
     yearPickerVisible: false
 };
 const seasons = ["Fall", "Winter", "Spring", "Summer"];
+const displayString = (course) => `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
 
 class PageBody extends Component {
     constructor(props) {
@@ -200,7 +201,7 @@ class PageBody extends Component {
                 if (res.ok) {
                     const courses = res.body.courses;
                     this.courses = courses;
-                    this.searchStrings = courses.map(course => this.displayString(course).toLowerCase());
+                    this.searchStrings = courses.map(course => displayString(course).toLowerCase());
                     this.populateSearchBody(this.state.searchValue);
                 } else {
                     console.log(res.message);
@@ -209,11 +210,6 @@ class PageBody extends Component {
             .catch(err => {
                 console.log(err);
             });
-    }
-
-    // Helper function to generate search strings of cards
-    displayString(course) {
-        return `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
     }
 
     // Filtering function, returns courses that match text field
@@ -247,8 +243,10 @@ class PageBody extends Component {
                 }
             }
         }
+
+        const resultsSort = (a, b) => (displayString(a.course) > displayString(b.course)? 1:-1);
         this.setState({
-            searchBody: courseResults.sort().concat(nameResults.sort()),
+            searchBody: courseResults.sort(resultsSort).concat(nameResults.sort(resultsSort)),
             searchValue: searchValue
         });
     }
