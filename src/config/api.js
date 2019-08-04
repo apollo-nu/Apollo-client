@@ -1,5 +1,5 @@
 const env = "" + process.env.NODE_ENV || "development";
-const host = ((env === "production")? "https://apollo-nu-proxy.herokuapp.com/api" : "http://localhost:8081");
+const host = ((env === "production")? "https://apollo-nu.herokuapp.com/api" : "http://localhost:8081");
 
 const routes = {
     courses: host + "/courses",
