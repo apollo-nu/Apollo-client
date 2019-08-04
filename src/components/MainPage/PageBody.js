@@ -248,7 +248,7 @@ class PageBody extends Component {
             }
         }
         this.setState({
-            searchBody: courseResults.concat(nameResults),
+            searchBody: courseResults.sort().concat(nameResults.sort()),
             searchValue: searchValue
         });
     }

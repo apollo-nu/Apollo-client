@@ -36,6 +36,82 @@ input:-webkit-autofill:active  {
     --year-picker-width: 400px;
 }
 
+/* Creds */
+.AuthPage {
+    padding-top: 40px;
+    height: 100vh;
+    background-color: var(--main-bg-color);
+}
+
+.LoginLogo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 200px;
+    margin-bottom: 16px;
+}
+
+.AuthWrapper {
+    height: 250px;
+    width: 400px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.AuthHeaderText {
+    color: #7550AB;
+    font-size: 22pt;
+    margin-top: 8px;
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.AuthForm {
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.AuthTextField {
+    width: 90%;
+    padding: 12px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.SubmitButton {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: white;
+    background-color: var(--main-bg-color);
+    cursor: pointer;
+    cursor: -moz-pointer;
+    cursor: -webkit-pointer;
+}
+
+.NavText {
+    text-align: center;
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+    cursor: -moz-pointer;
+    cursor: -webkit-pointer;
+}
+
+.ErrorText {
+    color: red;
+    margin: 3px;
+}
+
 /* MainPage */
 .MainPage {
     width: 100vw;
@@ -140,6 +216,7 @@ input:-webkit-autofill:active  {
 .SearchBody {
     height: 100%;
     width: 100%;
+    overflow-y: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -194,83 +271,6 @@ input:-webkit-autofill:active  {
     border-radius: 5px;
     background-color: var(--main-bg-color);
 }
-
-/* Creds */
-.AuthPage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: var(--main-bg-color);
-}
-
-.LoginLogo {
-    height: 300px;
-    width: 300px;
-    margin-bottom: 40px;
-    margin-top: -200px;
-}
-
-.AuthWrapper {
-    margin-top: -25px;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    background-color: white;
-}
-
-.AuthHeaderText {
-    color: #7550AB;
-    font-size: 22pt;
-    margin-top: 30px;
-    margin-bottom: 28px;
-    text-align: center;
-}
-
-.AuthForm {
-    width: 350px;
-    height: 100%;
-    margin-bottom: 20px;
-    margin-right: 32px;
-    margin-left: 32px;
-    text-align: center;
-}
-
-.AuthTextField {
-    width: 90%;
-    padding: 12px;
-    margin-bottom: 8px;
-    font-size: 16px;
-    border-radius: 5px;
-    background-color: white;
-}
-
-.SubmitButton {
-    width: 100%;
-    padding: 12px;
-    margin-top: 8px;
-    border-radius: 8px;
-    font-size: 16px;
-    color: white;
-    background-color: var(--main-bg-color);
-    cursor: pointer;
-    cursor: -moz-pointer;
-    cursor: -webkit-pointer;
-}
-
-.NavText {
-    color: white;
-    text-decoration: underline;
-    cursor: pointer;
-    cursor: -moz-pointer;
-    cursor: -webkit-pointer;
-}
-
-.ErrorText {
-    color: red;
-    margin: 3px;
-}
-
 
 /*
  * Dropdown styling

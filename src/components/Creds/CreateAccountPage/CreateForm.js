@@ -24,8 +24,7 @@ const errorMap = email => {
         "email is required": "Missing Field(s).",
         "password is required": "Missing Field(s).",
         "Please enter a valid email address": "Invalid Email.",
-        "Password is too short": "Invalid Credentials.",
-        "Failed to validate user.": "Invalid Credentials.",
+        "Password is too short": "Password must be at least 8 characters.",
         "Passwords must be equal": "Passwords must match."
     }
     map[`No user with email ${email} found.`] = "Invalid Credentials.";
