@@ -24,7 +24,7 @@ const initialData = {
     yearPickerVisible: false
 };
 const seasons = ["Fall", "Winter", "Spring", "Summer"];
-const displayString = (course) => `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
+const displayString = course => `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
 
 class PageBody extends Component {
     constructor(props) {
