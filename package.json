@@ -24,7 +24,6 @@
     "testReact": "react-scripts test",
     "heroku-postbuild": "npm run build"
   },
-  "homepage": "https://cooperbarth.com/Apollo-client/",
   "eslintConfig": {
     "extends": "react-app"
   },
