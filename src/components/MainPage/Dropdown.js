@@ -6,9 +6,15 @@ class Dropdown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listTitles: [
-                "Edit Years",
-                "Log Out"
+            listItems: [
+                {
+                    title: "Edit Years",
+                    onClick: null
+                },
+                {
+                    title: "Log Out",
+                    onClick: this.props.logout
+                }
             ]
         };
     }
@@ -27,11 +33,12 @@ class Dropdown extends Component {
                 {this.props.visible?
                     <div className="DropdownList"
                          id="dropdownList">
-                        {this.state.listTitles.map((title, i) => (
+                        {this.state.listItems.map((item, i) => (
                             <div className="DropdownListItem"
                                  id="dropdownListItem"
-                                 key={i}>
-                                {title}
+                                 key={i}
+                                 onClick={item.onClick}>
+                                {item.title}
                             </div>
                         ))}
                     </div>
@@ -42,8 +49,9 @@ class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
-    visible: PropTypes.bool,
-    toggle: PropTypes.func
+    logout: PropTypes.func,
+    toggle: PropTypes.func,
+    visible: PropTypes.bool
 };
 
 export default Dropdown;

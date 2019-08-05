@@ -7,6 +7,7 @@ import axios from "axios";
 import API from "../../config/api";
 axios.defaults.withCredentials = true;
 const pingAPI = `${API.users}/`;
+const logoutAPI = `${API.users}/logout/`;
 
 class MainPage extends Component {
   constructor(props) {
@@ -22,16 +23,21 @@ class MainPage extends Component {
     axios.get(pingAPI)
       .then(response => {
           response = response.data;
-        if (response.ok) {
-          this.setState({id: response.body.id});
-        } else {
-          this.props.history.push("/login/");
-        }
+          if (response.ok) {
+            this.setState({id: response.body.id});
+          } else {
+            this.props.history.push("/login/");
+          }
       })
       .catch(err => {
           console.log(err);
           this.props.history.push("/login/");
       })
+  }
+
+  logout() {
+    this.props.history.push("/login/");
+    axios.get(logoutAPI);
   }
 
   toggleDropdown() {
@@ -54,7 +60,8 @@ class MainPage extends Component {
                 (<div className="MainPage"
                       onClick={e => this.hideDropdown(e)}>
                   <PageHeader dropdownVisible={this.state.dropdownVisible}
-                              toggle={this.toggleDropdown.bind(this)}/>
+                              toggle={this.toggleDropdown.bind(this)}
+                              logout={this.logout.bind(this)}/>
                   <PageBody id={this.state.id}/>
                 </div>
                 ) : null

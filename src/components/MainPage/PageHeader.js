@@ -15,7 +15,8 @@ class PageHeader extends Component {
                         alt="Apollo"/>
                 </div>
                 <Dropdown visible={this.props.dropdownVisible}
-                          toggle={this.props.toggle}/>
+                          toggle={this.props.toggle}
+                          logout={this.props.logout}/>
             </div>
         )
     }
@@ -23,6 +24,7 @@ class PageHeader extends Component {
 
 PageHeader.propTypes = {
     dropdownVisible: PropTypes.bool,
+    logout: PropTypes.func,
     toggle: PropTypes.func
 };
 
