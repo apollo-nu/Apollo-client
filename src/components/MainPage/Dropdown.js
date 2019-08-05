@@ -25,10 +25,11 @@ class Dropdown extends Component {
                                   invert/>
                 </div>
                 {this.props.visible?
-                    <div className="DropdownList">
+                    <div className="DropdownList"
+                         id="dropdownList">
                         {this.state.listTitles.map((title, i) => (
                             <div className="DropdownListItem"
-                                 id="dropdownList"
+                                 id="dropdownListItem"
                                  key={i}>
                                 {title}
                             </div>

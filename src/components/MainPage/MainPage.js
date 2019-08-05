@@ -34,24 +34,30 @@ class MainPage extends Component {
       })
   }
 
-  toggleDropdownVisible() {
+  toggleDropdown() {
     this.setState({dropdownVisible: !this.state.dropdownVisible});
   }
 
+  hideDropdown(e) {
+    const dropdownIds = [
+      "dropdown",
+      "dropdownList",
+      "dropdownListItem"
+    ]
+    if (!dropdownIds.includes(e.target.id)) {
+      this.setState({dropdownVisible: false});
+    }
+  }
+
   render() {
-    return (this.state.id?
-          (<div className="MainPage"
-                onClick={e => {
-                  const targetId = e.target.id;
-                  if (targetId !== "dropdown" && targetId !== "dropdownList") {
-                    this.setState({dropdownVisible: false});
-                  }
-                }}>
-            <PageHeader dropdownVisible={this.state.dropdownVisible}
-                        toggle={this.toggleDropdownVisible.bind(this)}/>
-            <PageBody id={this.state.id}/>
-          </div>
-          ) : null
+      return (this.state.id?
+                (<div className="MainPage"
+                      onClick={e => this.hideDropdown(e)}>
+                  <PageHeader dropdownVisible={this.state.dropdownVisible}
+                              toggle={this.toggleDropdown.bind(this)}/>
+                  <PageBody id={this.state.id}/>
+                </div>
+                ) : null
     );
   }
 }
