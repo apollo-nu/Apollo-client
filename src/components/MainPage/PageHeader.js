@@ -2,6 +2,17 @@ import React, { Component } from "react";
 import Dropdown from "./Dropdown";
 
 class PageHeader extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dropdownVisible: false
+        };
+    }
+
+    toggleDropdownVisible() {
+        this.setState({dropdownVisible: !this.state.dropdownVisible});
+    }
+
     render() {
         return (
             <div className="PageHeader">
@@ -13,7 +24,8 @@ class PageHeader extends Component {
                         className="HeaderName"
                         alt="Apollo"/>
                 </div>
-                <Dropdown/>
+                <Dropdown visible={this.state.dropdownVisible}
+                          toggle={this.toggleDropdownVisible.bind(this)}/>
             </div>
         )
     }

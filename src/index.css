@@ -147,6 +147,13 @@ input:-webkit-autofill:active  {
     margin-bottom: 0px;
     margin-top: 12px;
     margin-right: 32px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .DropdownList {
@@ -159,6 +166,7 @@ input:-webkit-autofill:active  {
     right: 8px;
     width: var(--dropdown-list-width);
     background-color: white;
+    user-select: none;
 }
 
 .DropdownListItem {
@@ -168,6 +176,11 @@ input:-webkit-autofill:active  {
     height: 32px;
     width: 100%;
     border: 1px solid black;
+    cursor: pointer;
+}
+
+.DropdownListItem:hover {
+    background-color: #EEEEEE;
 }
 
 .PageBody {
@@ -181,7 +194,7 @@ input:-webkit-autofill:active  {
     display: grid;
     justify-content: stretch;
     align-content: flex-start;
-    grid-template-columns: repeat(4, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
     grid-row-gap: 10px;
     grid-column-gap: 0px;
     padding: 10px;

@@ -5,7 +5,6 @@ class Dropdown extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dropdownVisible: true,
             listTitles: [
                 "Edit Years",
                 "Log Out"
@@ -16,12 +15,13 @@ class Dropdown extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="Dropdown">
+                <div className="Dropdown"
+                     onClick={this.props.toggle}>
                     <MaterialIcon icon="reorder"
-                                size="50"
-                                invert/>
+                                  size="50"
+                                  invert/>
                 </div>
-                {this.state.dropdownVisible?
+                {this.props.visible?
                     <div className="DropdownList">
                         {this.state.listTitles.map(title => (
                             <div className="DropdownListItem">{title}</div>
