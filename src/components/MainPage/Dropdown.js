@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import MaterialIcon from "material-icons-react";
 
 class Dropdown extends Component {
     render() {
         return (
             <div className="Dropdown">
-                <div className="DropdownButton">
-                    Show Dropdown
-                </div>
+                <MaterialIcon icon="reorder"
+                              size="50"
+                              invert/>
             </div>
         )
     }

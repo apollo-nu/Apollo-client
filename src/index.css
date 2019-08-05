@@ -123,7 +123,6 @@ input:-webkit-autofill:active  {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     width: 100%;
     height: var(--header-height);
     background-color: var(--main-bg-color);
@@ -142,7 +141,11 @@ input:-webkit-autofill:active  {
 }
 
 .Dropdown {
-    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0px;
+    margin-top: 12px;
+    margin-right: 32px;
 }
 
 .PageBody {
