@@ -1,24 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import MaterialIcon from "material-icons-react";
+import DropdownList from "./DropdownList";
 
 class Dropdown extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            listItems: [
-                {
-                    title: "Edit Years",
-                    onClick: null
-                },
-                {
-                    title: "Log Out",
-                    onClick: this.props.logout
-                }
-            ]
-        };
-    }
-
     render() {
         return (
             <React.Fragment>
@@ -30,19 +15,9 @@ class Dropdown extends Component {
                                   id="dropdown"
                                   invert/>
                 </div>
-                {this.props.visible?
-                    <div className="DropdownList"
-                         id="dropdownList">
-                        {this.state.listItems.map((item, i) => (
-                            <div className="DropdownListItem"
-                                 id="dropdownListItem"
-                                 key={i}
-                                 onClick={item.onClick}>
-                                {item.title}
-                            </div>
-                        ))}
-                    </div>
-                :null}
+                <DropdownList visible={this.props.visible}
+                              toggle={this.props.toggle}
+                              logout={this.props.logout}/>
             </React.Fragment>
         )
     }
