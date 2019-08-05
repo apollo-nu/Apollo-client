@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { DragDropContext } from "react-beautiful-dnd";
 import Board from "./Board";
 import Sidebar from "./Sidebar";
+import Toolbar from "./Toolbar";
 import YearPicker from "./YearPicker";
 
 import axios from "axios";
@@ -343,7 +344,10 @@ class PageBody extends Component {
                 {this.state.yearPickerVisible? 
                     <YearPicker onSubmit={this.onYearPickerSubmit.bind(this)}/> : 
                     <DragDropContext onDragEnd={this.onDragEnd}>
-                        <Board columns={this.state.board.columns}/>
+                        <div>
+                            <Toolbar/>
+                            <Board columns={this.state.board.columns}/>
+                        </div>
                         <Sidebar value={this.state.searchValue}
                                  column={this.state.searchBody}
                                  onChange={e => this.onSearchChange(e)}/>
