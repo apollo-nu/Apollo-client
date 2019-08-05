@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import MaterialIcon from "material-icons-react";
 
 class Dropdown extends Component {
@@ -16,15 +17,21 @@ class Dropdown extends Component {
         return (
             <React.Fragment>
                 <div className="Dropdown"
+                     id="dropdown"
                      onClick={this.props.toggle}>
                     <MaterialIcon icon="reorder"
                                   size="50"
+                                  id="dropdown"
                                   invert/>
                 </div>
                 {this.props.visible?
                     <div className="DropdownList">
-                        {this.state.listTitles.map(title => (
-                            <div className="DropdownListItem">{title}</div>
+                        {this.state.listTitles.map((title, i) => (
+                            <div className="DropdownListItem"
+                                 id="dropdownList"
+                                 key={i}>
+                                {title}
+                            </div>
                         ))}
                     </div>
                 :null}
@@ -32,5 +39,10 @@ class Dropdown extends Component {
         )
     }
 }
+
+Dropdown.propTypes = {
+    visible: PropTypes.bool,
+    toggle: PropTypes.func
+};
 
 export default Dropdown;

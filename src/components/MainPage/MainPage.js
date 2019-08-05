@@ -11,7 +11,10 @@ const pingAPI = `${API.users}/`;
 class MainPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {id: ""};
+    this.state = {
+      id: "",
+      dropdownVisible: false
+    };
   }
 
   // Pings the server and redirects to login if the jwt cookie is invalid
@@ -31,10 +34,21 @@ class MainPage extends Component {
       })
   }
 
+  toggleDropdownVisible() {
+    this.setState({dropdownVisible: !this.state.dropdownVisible});
+  }
+
   render() {
     return (this.state.id?
-          (<div className="MainPage">
-            <PageHeader/>
+          (<div className="MainPage"
+                onClick={e => {
+                  const targetId = e.target.id;
+                  if (targetId !== "dropdown" && targetId !== "dropdownList") {
+                    this.setState({dropdownVisible: false});
+                  }
+                }}>
+            <PageHeader dropdownVisible={this.state.dropdownVisible}
+                        toggle={this.toggleDropdownVisible.bind(this)}/>
             <PageBody id={this.state.id}/>
           </div>
           ) : null
