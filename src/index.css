@@ -120,9 +120,17 @@ input:-webkit-autofill:active  {
 }
 
 .PageHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
     height: var(--header-height);
     background-color: var(--main-bg-color);
+}
+
+.LogoWrapper {
+    height: 100%;
 }
 
 .HeaderLogo {
@@ -133,28 +141,15 @@ input:-webkit-autofill:active  {
     height: 100%;
 }
 
+.Dropdown {
+    margin-right: 12px;
+}
+
 .PageBody {
     display: flex;
     flex-direction: row;
     width: 100%;
     height: calc(100% - var(--header-height));
-}
-
-.Toolbar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: space-between;
-    width: 100%;
-    height: 30px;
-    border-bottom: 1px solid black;
-}
-
-.EditRowsButton {
-    border-radius: 5px;
-    margin-left: 5px;
-    width: 200px;
-    border-bottom: 1px solid black;
 }
 
 .Board {
