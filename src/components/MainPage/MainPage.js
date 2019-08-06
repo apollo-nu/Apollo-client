@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import PageHeader from "./PageHeader";
 import PageBody from "./PageBody";
+import DropdownList from "./DropdownList";
 
 import axios from "axios";
 import API from "../../config/api";
@@ -57,13 +58,15 @@ class MainPage extends Component {
 
   render() {
       return (this.state.id?
-                (<div className="MainPage"
+                (<React.Fragment>
+                  <div className="MainPage"
                       onClick={e => this.hideDropdown(e)}>
-                  <PageHeader dropdownVisible={this.state.dropdownVisible}
-                              toggle={this.toggleDropdown.bind(this)}
-                              logout={this.logout.bind(this)}/>
-                  <PageBody id={this.state.id}/>
-                </div>
+                    <PageHeader toggle={this.toggleDropdown.bind(this)}/>
+                    <PageBody id={this.state.id}/>
+                  </div>
+                  <DropdownList visible={this.state.dropdownVisible}
+                                logout={this.logout}/>
+                </React.Fragment>
                 ) : null
     );
   }

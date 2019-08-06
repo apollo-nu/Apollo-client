@@ -41,7 +41,6 @@ class DropdownList extends Component {
 
 DropdownList.propTypes = {
     logout: PropTypes.func,
-    toggle: PropTypes.func,
     visible: PropTypes.bool
 };
 
