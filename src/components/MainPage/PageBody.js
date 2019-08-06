@@ -20,8 +20,7 @@ const initialData = {
         columns: {}
     },
     searchBody: [],
-    searchValue: "",
-    yearPickerVisible: false
+    searchValue: ""
 };
 const seasons = ["Fall", "Winter", "Spring", "Summer"];
 const displayString = course => `${course.subject.symbol} ${course.catalog_num}: ${course.title}`;
@@ -52,7 +51,7 @@ class PageBody extends Component {
                     if (board) {
                         this.getColumns(board);
                     } else {
-                        this.setState({yearPickerVisible: true});
+                        this.props.toggleYearPicker();
                     }
                 } else {
                     console.log(res.message);
@@ -120,7 +119,7 @@ class PageBody extends Component {
     // Callback that fires on year picker submit
     onYearPickerSubmit(startYear, endYear) {
         this.postBoard(startYear.value, endYear.value);
-        this.setState({yearPickerVisible: false});
+        this.props.toggleYearPicker();
     }
 
     // Creates a new board for the user
@@ -340,8 +339,9 @@ class PageBody extends Component {
     render() {
         return (
             <div className="PageBody">
-                {this.state.yearPickerVisible? 
-                    <YearPicker onSubmit={this.onYearPickerSubmit.bind(this)}/> : 
+                {this.props.yearPickerVisible? 
+                    <YearPicker onSubmit={this.onYearPickerSubmit.bind(this)}
+                                boardEmpty={Object.keys(this.state.board.columns).length === 0}/> : 
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         <Board columns={this.state.board.columns}/>
                         <Sidebar value={this.state.searchValue}
@@ -354,7 +354,9 @@ class PageBody extends Component {
 }
 
 PageBody.propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string,
+    toggleYearPicker: PropTypes.func,
+    yearPickerVisible: PropTypes.bool
 }
 
 export default PageBody;

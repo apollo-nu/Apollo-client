@@ -8,7 +8,7 @@ class DropdownList extends Component {
             listItems: [
                 {
                     title: "Edit Years",
-                    onClick: null
+                    onClick: this.props.toggleYearPicker
                 },
                 {
                     title: "Log Out",
@@ -41,6 +41,7 @@ class DropdownList extends Component {
 
 DropdownList.propTypes = {
     logout: PropTypes.func,
+    toggleYearPicker: PropTypes.func,
     visible: PropTypes.bool
 };
 

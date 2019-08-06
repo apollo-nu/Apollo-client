@@ -56,13 +56,14 @@ class YearPicker extends Component {
                 <input type="button"
                        className="YearSubmitButton"
                        onClick={this.handleSubmit.bind(this)}
-                       value="Create Board"/>
+                       value={`${this.props.boardEmpty? "Create" : "Edit"} Board`}/>
             </div>
         )
     }
 }
 
 YearPicker.propTypes = {
+    boardEmpty: PropTypes.bool,
     onSubmit: PropTypes.func
 }
 

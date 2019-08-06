@@ -15,7 +15,8 @@ class MainPage extends Component {
     super(props);
     this.state = {
       id: "",
-      dropdownVisible: false
+      dropdownVisible: false,
+      yearPickerVisible: false
     };
   }
 
@@ -41,6 +42,13 @@ class MainPage extends Component {
     axios.get(logoutAPI);
   }
 
+  toggleYearPicker() {
+    this.setState({
+      dropdownVisible: false,
+      yearPickerVisible: !this.state.yearPickerVisible
+    });
+  }
+
   toggleDropdown() {
     this.setState({dropdownVisible: !this.state.dropdownVisible});
   }
@@ -62,10 +70,13 @@ class MainPage extends Component {
                   <div className="MainPage"
                       onClick={e => this.hideDropdown(e)}>
                     <PageHeader toggle={this.toggleDropdown.bind(this)}/>
-                    <PageBody id={this.state.id}/>
+                    <PageBody id={this.state.id}
+                              toggleYearPicker={this.toggleYearPicker.bind(this)}
+                              yearPickerVisible={this.state.yearPickerVisible}/>
                   </div>
                   <DropdownList visible={this.state.dropdownVisible}
-                                logout={this.logout}/>
+                                toggleYearPicker={this.toggleYearPicker.bind(this)}
+                                logout={this.logout.bind(this)}/>
                 </React.Fragment>
                 ) : null
     );
