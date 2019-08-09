@@ -118,7 +118,11 @@ class PageBody extends Component {
 
     // Callback that fires on year picker submit
     onYearPickerSubmit(startYear, endYear) {
-        this.postBoard(startYear.value, endYear.value);
+        if (Object.keys(this.state.board.columns) === 0) {
+            this.postBoard(startYear.value, endYear.value);
+        } else {
+            // TODO: Modify board
+        }
         this.props.toggleYearPicker();
     }
 
@@ -341,7 +345,8 @@ class PageBody extends Component {
             <div className="PageBody">
                 {this.props.yearPickerVisible? 
                     <YearPicker onSubmit={this.onYearPickerSubmit.bind(this)}
-                                boardEmpty={Object.keys(this.state.board.columns).length === 0}/> : 
+                                boardEmpty={Object.keys(this.state.board.columns).length === 0}
+                                columns={this.state.board.columns}/> : 
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         <Board columns={this.state.board.columns}/>
                         <Sidebar value={this.state.searchValue}

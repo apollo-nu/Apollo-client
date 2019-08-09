@@ -5,7 +5,11 @@ import Dropdown from "react-dropdown";
 class YearPicker extends Component {
     constructor(props) {
         super(props);
-        this.state = this.setUpDropDowns();
+        if (Object.keys(this.props.columns).length === 0) {
+            this.state = this.setUpDropDowns();
+        } else {
+            this.state = this.modifyDropdowns();
+        }
     }
 
     // Generates years to display in drop-down menus
@@ -27,6 +31,29 @@ class YearPicker extends Component {
         return {
             startYear: DEFAULT_YEAR,
             endYear: DEFAULT_YEAR
+        };
+    }
+
+    modifyDropdowns() {
+        const columns = this.props.columns;
+        const columnKeys = Object.keys(columns);
+        const year = yearString => yearString.slice(0, 4);
+        let yearSet = new Set();
+
+        for (let key of columnKeys) {
+            const column = columns[key].column;
+            yearSet.add(year(column.name));
+        }
+        const yearArr = [...yearSet].sort().slice(0, -1);
+
+        this.years = yearArr.map(e => ({
+            value: e,
+            label: `${e}-${(parseInt(e) + 1).toString().slice(2, 4)}`
+        }));
+
+        return {
+            startYear: yearArr[0],
+            endYear: yearArr[yearArr.length - 1]
         };
     }
 
@@ -64,6 +91,7 @@ class YearPicker extends Component {
 
 YearPicker.propTypes = {
     boardEmpty: PropTypes.bool,
+    columns: PropTypes.object,
     onSubmit: PropTypes.func
 }
 
