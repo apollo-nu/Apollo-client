@@ -48,7 +48,7 @@ class YearPicker extends Component {
 
         this.years = yearArr.map(e => ({
             value: e,
-            label: `${e}-${(parseInt(e) + 1).toString().slice(2, 4)}`
+            label: `${e}-${(parseInt(e, 10) + 1).toString().slice(2, 4)}`
         }));
 
         return {
