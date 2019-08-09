@@ -121,7 +121,7 @@ class PageBody extends Component {
         if (Object.keys(this.state.board.columns) === 0) {
             this.postBoard(startYear.value, endYear.value);
         } else {
-            // TODO: Modify board
+            this.modifyColumns(startYear.value, endYear.value);
         }
         this.props.toggleYearPicker();
     }
@@ -190,6 +190,10 @@ class PageBody extends Component {
                     console.log(err);
                 });
         }
+    }
+
+    modifyColumns(startYear, endYear) {
+        console.log(startYear, endYear);
     }
 
     /* 
