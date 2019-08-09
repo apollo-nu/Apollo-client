@@ -44,7 +44,19 @@ class YearPicker extends Component {
             const column = columns[key].column;
             yearSet.add(year(column.name));
         }
-        const yearArr = [...yearSet].sort().slice(0, -1);
+        let yearArr = [...yearSet].sort().slice(0, -1);
+        const startYear = yearArr[0],
+              endYear = yearArr[yearArr.length - 1];
+
+        const precedingYears = [
+            (startYear - 2).toString(),
+            (startYear - 1).toString()
+        ];
+        const followingYears = [
+            (parseInt(endYear, 10) + 1).toString(),
+            (parseInt(endYear, 10) + 2).toString()
+        ]
+        yearArr = [...precedingYears, ...yearArr, ...followingYears];
 
         this.years = yearArr.map(e => ({
             value: e,
@@ -52,8 +64,8 @@ class YearPicker extends Component {
         }));
 
         return {
-            startYear: yearArr[0],
-            endYear: yearArr[yearArr.length - 1]
+            startYear: startYear,
+            endYear: endYear
         };
     }
 
